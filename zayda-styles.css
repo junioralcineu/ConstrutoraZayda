@@ -174,6 +174,128 @@ h3.title {
   .nav-cta .menu { display: inline-flex; }
 }
 
+/* ============================================================
+   MEGA-MENU (dropdown estilo Apple)
+============================================================ */
+
+/* Wrapper do item de nav — sem posicionamento próprio */
+.nav-item { position: static; display: inline-flex; align-items: center; }
+.nav-item > a { display: inline-block; }
+
+/* Painel dropdown — fixed abaixo do nav, fora do stacking context do header */
+.nav-dropdown {
+  position: fixed;
+  top: 68px; /* altura do nav (16px padding × 2 + 36px logo) */
+  left: 0; right: 0;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--line);
+  padding: 36px var(--pad) 44px;
+  z-index: 79;
+  /* estado fechado */
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 200ms var(--ease), transform 220ms var(--ease);
+}
+.nav-dropdown.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Layout interno */
+.nd-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  gap: clamp(48px, 7vw, 96px);
+  align-items: flex-start;
+}
+.nd-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+}
+.nd-cta-col { margin-left: auto; align-self: center; }
+
+/* Rótulo de categoria */
+.nd-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 12px;
+}
+
+/* Link de item */
+.nd-link {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 7px 0;
+  font-size: 13px;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: color 160ms var(--ease);
+}
+.nd-link:hover { color: var(--ink); }
+.nd-meta {
+  font-size: 11px;
+  color: var(--mid);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  transition: color 160ms var(--ease);
+}
+.nd-link:hover .nd-meta { color: var(--ink-2); }
+
+/* Link "ver todos" */
+.nd-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--ink);
+  white-space: nowrap;
+  transition: gap 200ms var(--ease);
+}
+.nd-all:hover { gap: 14px; }
+
+/* Underline ativo no item de nav quando o painel está aberto */
+.nav-item.active > a::after { transform: scaleX(1); }
+
+/* Backdrop — desfoca o conteúdo da página atrás do painel */
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  top: 68px;
+  background: rgba(255,255,255,0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 78;
+  transition: opacity 260ms var(--ease);
+}
+.nav-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile: oculta tudo — o menu overlay já cobre a navegação */
+@media (max-width: 820px) {
+  .nav-dropdown, .nav-backdrop { display: none; }
+}
+
 /* mobile menu overlay */
 .menu-overlay {
   position: fixed; inset: 0; z-index: 90;

@@ -73,6 +73,47 @@ if (initialRoute !== 'inicio') {
 }
 
 /* ============================================================
+   MEGA-MENU (dropdown estilo Apple)
+============================================================ */
+const navBackdrop = document.getElementById('navBackdrop');
+const navMenuItems = document.querySelectorAll('.nav-item[data-menu]');
+const navPanels    = document.querySelectorAll('.nav-dropdown');
+let menuHideTimer;
+
+function openNavPanel(id) {
+  clearTimeout(menuHideTimer);
+  navMenuItems.forEach(i => i.classList.toggle('active', i.dataset.menu === id));
+  navPanels.forEach(p => p.classList.toggle('active', p.dataset.panel === id));
+  navBackdrop.classList.add('show');
+}
+
+function closeNavPanels(delay = 120) {
+  menuHideTimer = setTimeout(() => {
+    navMenuItems.forEach(i => i.classList.remove('active'));
+    navPanels.forEach(p => p.classList.remove('active'));
+    navBackdrop.classList.remove('show');
+  }, delay);
+}
+
+navMenuItems.forEach(item => {
+  item.addEventListener('mouseenter', () => openNavPanel(item.dataset.menu));
+  item.addEventListener('mouseleave', () => closeNavPanels());
+});
+
+navPanels.forEach(panel => {
+  panel.addEventListener('mouseenter', () => clearTimeout(menuHideTimer));
+  panel.addEventListener('mouseleave', () => closeNavPanels());
+});
+
+/* Fecha ao clicar no backdrop ou num link do dropdown */
+navBackdrop.addEventListener('click', () => closeNavPanels(0));
+navPanels.forEach(panel => {
+  panel.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => closeNavPanels(0));
+  });
+});
+
+/* ============================================================
    MOBILE MENU
 ============================================================ */
 const menuOverlay = document.getElementById('menuOverlay');

@@ -18,16 +18,95 @@
     <img src="Logo/Logo.png" alt="Zayda Construtora" class="brand-logo">
   </a>
   <nav class="nav-links">
-    <a data-route="empreendimentos" href="#empreendimentos" data-link>Empreendimentos</a>
-    <a data-route="simulador" href="#simulador" data-link>Simulador</a>
-    <a data-route="sobre" href="#sobre" data-link>Sobre</a>
-    <a data-route="atendimento" href="#atendimento" data-link>Atendimento</a>
+    <div class="nav-item" data-menu="empreendimentos">
+      <a data-route="empreendimentos" href="#empreendimentos" data-link>Empreendimentos</a>
+    </div>
+    <div class="nav-item" data-menu="simulador">
+      <a data-route="simulador" href="#simulador" data-link>Simulador</a>
+    </div>
+    <div class="nav-item" data-menu="sobre">
+      <a data-route="sobre" href="#sobre" data-link>Sobre</a>
+    </div>
+    <div class="nav-item" data-menu="atendimento">
+      <a data-route="atendimento" href="#atendimento" data-link>Atendimento</a>
+    </div>
   </nav>
   <div class="nav-cta">
     <button class="pill" id="openContact">Quero meu imóvel →</button>
     <button class="menu" id="openMenu">Menu</button>
   </div>
 </header>
+
+<!-- ====== MEGA-MENU DROPDOWNS (fora do header para evitar stacking context do backdrop-filter) ====== -->
+<div class="nav-dropdown" data-panel="empreendimentos">
+  <div class="nd-inner">
+    <div class="nd-col">
+      <span class="nd-label">Em lançamento &amp; obra</span>
+      <a class="nd-link" href="#empreendimento" data-route="empreendimento" data-link data-emp="praia-da-lagoa">Praia da Lagoa<span class="nd-meta">2026 · Beira-Rio · Lançamento</span></a>
+      <a class="nd-link" href="#empreendimento" data-route="empreendimento" data-link data-emp="mares">Marés<span class="nd-meta">2025 · Praia · Em obra</span></a>
+      <a class="nd-link" href="#empreendimento" data-route="empreendimento" data-link data-emp="atoba">Atobá<span class="nd-meta">2025 · Pescão · Em obra</span></a>
+    </div>
+    <div class="nd-col">
+      <span class="nd-label">Entregues</span>
+      <a class="nd-link" href="#empreendimento" data-route="empreendimento" data-link data-emp="vila-do-sol">Vila do Sol<span class="nd-meta">2024 · Centro</span></a>
+      <a class="nd-link" href="#empreendimento" data-route="empreendimento" data-link data-emp="aldeia">Aldeia<span class="nd-meta">2023 · Costa Azul</span></a>
+      <a class="nd-link" href="#empreendimento" data-route="empreendimento" data-link data-emp="manguezal">Manguezal<span class="nd-meta">2022 · Beira-Rio</span></a>
+    </div>
+    <div class="nd-col nd-cta-col">
+      <a class="nd-all" href="#empreendimentos" data-route="empreendimentos" data-link>Ver todos os empreendimentos →</a>
+    </div>
+  </div>
+</div>
+
+<div class="nav-dropdown" data-panel="simulador">
+  <div class="nd-inner">
+    <div class="nd-col">
+      <span class="nd-label">Financiamento</span>
+      <a class="nd-link" href="#simulador" data-route="simulador" data-link>Simular parcelas<span class="nd-meta">SAC ou PRICE · 4 variáveis</span></a>
+      <a class="nd-link" href="#simulador" data-route="simulador" data-link>Casa Verde e Amarela<span class="nd-meta">A partir de 7,16% a.a.</span></a>
+      <a class="nd-link" href="#simulador" data-route="simulador" data-link>Financiamento de mercado<span class="nd-meta">A partir de 10,5% a.a.</span></a>
+    </div>
+    <div class="nd-col nd-cta-col">
+      <a class="nd-all" href="#simulador" data-route="simulador" data-link>Abrir simulador →</a>
+    </div>
+  </div>
+</div>
+
+<div class="nav-dropdown" data-panel="sobre">
+  <div class="nd-inner">
+    <div class="nd-col">
+      <span class="nd-label">A Zayda</span>
+      <a class="nd-link" href="#sobre" data-route="sobre" data-link>Quem somos<span class="nd-meta">Est. 2014 · Barra de São João</span></a>
+      <a class="nd-link" href="#processo" data-route="processo" data-link>Nosso processo<span class="nd-meta">6 etapas, do café à entrega</span></a>
+    </div>
+    <div class="nd-col">
+      <span class="nd-label">Empresa</span>
+      <a class="nd-link" href="#esg" data-route="esg" data-link>Sustentabilidade<span class="nd-meta">ESG · Relatório 2025</span></a>
+      <a class="nd-link" href="#carreira" data-route="carreira" data-link>Trabalhe conosco<span class="nd-meta">4 vagas abertas</span></a>
+      <a class="nd-link" href="#blog" data-route="blog" data-link>Blog<span class="nd-meta">Histórias, processo e lugar</span></a>
+      <a class="nd-link" href="#investidores" data-route="investidores" data-link>Investidores<span class="nd-meta">VGV · EBITDA · Documentos</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="nav-dropdown" data-panel="atendimento">
+  <div class="nd-inner">
+    <div class="nd-col">
+      <span class="nd-label">Fale conosco</span>
+      <a class="nd-link" href="https://wa.me/5522999990000" target="_blank">WhatsApp<span class="nd-meta">(22) 9 9999-0000 · resposta em até 1h</span></a>
+      <a class="nd-link" href="mailto:contato@zayda.com.br">E-mail<span class="nd-meta">contato@zayda.com.br</span></a>
+      <a class="nd-link" href="tel:+5522999990000">Telefone<span class="nd-meta">(22) 2645-0000 · seg–sex, 8h–18h</span></a>
+    </div>
+    <div class="nd-col">
+      <span class="nd-label">Presencial &amp; suporte</span>
+      <a class="nd-link" href="#atendimento" data-route="atendimento" data-link>Visitar o escritório<span class="nd-meta">Rua das Palmeiras, 120 · Centro</span></a>
+      <a class="nd-link" href="#atendimento" data-route="atendimento" data-link>Perguntas frequentes<span class="nd-meta">6 respostas rápidas</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop de desfoque -->
+<div class="nav-backdrop" id="navBackdrop"></div>
 
 <!-- ====== MENU OVERLAY (mobile) ====== -->
 <div class="menu-overlay" id="menuOverlay">
