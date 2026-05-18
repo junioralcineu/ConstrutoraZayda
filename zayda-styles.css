@@ -2595,7 +2595,20 @@ footer.page-hidden { display: none; }
   line-height: 1.8 !important;
 }
 
+/* ── Imagens editoriais inline ─────────────────────────────── */
+.art-figure {
+  margin: clamp(40px, 5vw, 64px) -60px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.art-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* ── Mobile ─────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .art-cover { border-radius: 4px; }
+  .art-figure { margin-inline: -var(--pad); border-radius: 0; }
 }
