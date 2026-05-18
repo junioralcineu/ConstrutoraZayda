@@ -921,51 +921,6 @@ footer {
 .hide-mobile { }
 @media (max-width: 820px) { .hide-mobile { display: none !important; } }
 
-/* ============================================================
-   HERO SEARCH (added)
-============================================================ */
-.hero-search {
-  display: grid;
-  grid-template-columns: 1.2fr 1.2fr 1fr auto;
-  gap: 1px;
-  margin: 28px 0 0;
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.32);
-  border-radius: 4px;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  max-width: 980px;
-  overflow: hidden;
-}
-.hero-search .hs-field {
-  display: flex; flex-direction: column; gap: 4px;
-  padding: 14px 18px;
-  background: rgba(0,0,0,0.25);
-}
-.hero-search .hs-field label {
-  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: rgba(255,255,255,0.65);
-}
-.hero-search .hs-field select {
-  background: transparent; border: 0; color: #fff;
-  font-family: var(--font-sans);
-  font-size: 15px; padding: 4px 0; outline: none;
-  -webkit-appearance: none; appearance: none;
-  cursor: pointer;
-}
-.hero-search .hs-field select option { color: var(--ink); background: var(--bg); }
-.hero-search .hs-go {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 0 28px;
-  background: #fff; color: var(--ink);
-  font-size: 14px; font-weight: 500; letter-spacing: 0.01em;
-  transition: background 220ms var(--ease), color 220ms var(--ease);
-}
-.hero-search .hs-go:hover { background: var(--ink); color: #fff; }
-@media (max-width: 820px) {
-  .hero-search { grid-template-columns: 1fr 1fr; }
-  .hero-search .hs-go { grid-column: 1 / -1; padding: 16px; justify-content: center; }
-}
 
 /* ============================================================
    STATS section
@@ -1526,3 +1481,332 @@ image-slot {
 }
 
 .processo-step a, .work-item, .obra, .post, .channel, .report, .vaga { color: inherit; text-decoration: none; }
+
+/* ============================================================
+   MOBILE-FIRST  ≤ 768 px
+   Referência: Foster + Partners — tipografia contida, peso leve,
+   profundidade visual, rolagem horizontal fluida nos portfólios.
+============================================================ */
+
+/* ── Globals: tap targets & scroll suave ──────────────────── */
+@media (max-width: 768px) {
+  html { scroll-behavior: smooth; }
+  a, button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   1. ESCALA TIPOGRÁFICA MOBILE
+   H1 → 28–32 px, peso 300, letter-spacing negativo
+   Corpo → 14 px, line-height 1.6, grafite (não preto puro)
+══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Corpo base — grafite, respiro generoso */
+  body { font-size: 14px; line-height: 1.6; }
+
+  /* Parágrafos: grafite escuro, não preto puro (#383838) */
+  p,
+  .studio-body .col-text p,
+  .emp-text p,
+  .approach-copy p,
+  .process-blurb,
+  .processo-step .stage-desc,
+  .testimonial-quote,
+  .value-card p { color: #383838; line-height: 1.65; }
+
+  /* H1 hero — Foster style: peso leve, tamanho contido */
+  .hero-headline {
+    font-size: clamp(28px, 8vw, 36px);
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    margin-bottom: 4px;
+  }
+
+  /* H1 páginas internas (Empreendimentos, Simulador, Blog…) */
+  .page-head h1 {
+    font-size: clamp(26px, 7vw, 32px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  /* Lead intro — Sobre, Carreira, Investidores */
+  .studio-intro .lead {
+    font-size: clamp(20px, 5.5vw, 26px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  /* H2 seções */
+  h2.section {
+    font-size: clamp(20px, 5.5vw, 26px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  /* Statement (home) */
+  .statement { font-size: clamp(16px, 4.5vw, 20px); max-width: none; }
+
+  /* Números de stats — eram >72 px no mobile */
+  .stat-num { font-size: clamp(32px, 9vw, 44px); margin-top: 6px; }
+
+  /* CTA headline */
+  .cta-headline { font-size: clamp(22px, 6.5vw, 30px); }
+
+  /* Nome do empreendimento (hero de detalhe) */
+  .emp-name {
+    font-size: clamp(26px, 8vw, 40px);
+    font-weight: 300;
+    letter-spacing: -0.025em;
+  }
+
+  /* Sub-headings */
+  .vaga-name .name  { font-size: clamp(17px, 4.5vw, 21px); }
+  .channel .name    { font-size: clamp(18px, 5vw, 22px); }
+  .faq-list .q      { font-size: clamp(15px, 4vw, 19px); }
+  .processo-step .stage-name { font-size: clamp(17px, 4.5vw, 21px); }
+  .modal-step h3    { font-size: clamp(20px, 5.5vw, 26px); font-weight: 300; }
+
+  /* Marquee reduzido */
+  .marquee-track { font-size: clamp(22px, 6vw, 32px); gap: 28px; animation-duration: 22s; }
+  .marquee-track span { gap: 28px; }
+}
+
+/* ── Nav ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav { padding: 12px var(--pad); }
+  .nav .brand-logo { height: 26px; }
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero { min-height: 100svh; }
+  .hero-content { padding-top: 76px; padding-bottom: 32px; }
+  .hero-top-row   { display: none; } /* tag de destaque */
+  .hero-bottom-row { display: none; } /* indicador de scroll */
+}
+
+/* ══════════════════════════════════════════════════════════
+   2. PROFUNDIDADE VISUAL — sobreposição título/imagem
+   Estilo Foster: copy flutua sobre a imagem criando depth
+══════════════════════════════════════════════════════════ */
+
+/* Seção Abordagem: texto sobe 40 px sobre a foto */
+@media (max-width: 768px) {
+  .approach { padding-left: 0; padding-right: 0; }
+  .approach-head { padding: 0 var(--pad); }
+  .approach-grid { gap: 0; }
+  .approach-copy {
+    position: relative;
+    z-index: 2;
+    background: var(--bg);
+    margin-top: -40px;          /* sobreposição sobre a imagem */
+    padding: 32px var(--pad) 0;
+    max-width: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   3. PORTFÓLIO → CARROSSEL HORIZONTAL (scroll-snap)
+   O usuário desliza com o dedo; sem empilhamento infinito
+══════════════════════════════════════════════════════════ */
+
+/* ── Obras (página Empreendimentos) ───────────────────────── */
+@media (max-width: 768px) {
+  .obras-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;            /* Firefox */
+    gap: 16px;
+    padding: 32px var(--pad) 40px;
+    scroll-padding-left: var(--pad);
+  }
+  .obras-grid::-webkit-scrollbar { display: none; }
+  /* ghost element para o último card alinhar no padding */
+  .obras-grid::after { content: ''; flex: 0 0 calc(var(--pad) - 16px); }
+
+  .obra {
+    flex: 0 0 72vw;
+    max-width: 290px;
+    scroll-snap-align: start;
+    margin-top: 0 !important;
+  }
+  .obra-media,
+  .obras-grid .obra:nth-child(odd) .obra-media,
+  .obras-grid .obra:nth-child(even) .obra-media { aspect-ratio: 3 / 4; }
+}
+
+/* ── Obras em destaque (home) → carrossel ─────────────────── */
+@media (max-width: 768px) {
+  .works-list {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-top: 0;
+  }
+  .works-list::-webkit-scrollbar { display: none; }
+
+  .work-item {
+    flex: 0 0 68vw;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 28px 20px 32px;
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+    scroll-snap-align: start;
+    transition: none;
+  }
+  .work-item:first-child { border-left: 1px solid var(--line); }
+  .work-item:hover { padding-left: 20px; } /* desativa indent no touch */
+  .work-item .name { font-size: clamp(20px, 5.5vw, 26px); }
+  .work-item .year { display: block; }
+}
+
+/* ── Blog → carrossel ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .blog-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 16px;
+    padding: 28px var(--pad) 40px;
+    scroll-padding-left: var(--pad);
+    border-bottom: 0;
+  }
+  .blog-grid::-webkit-scrollbar { display: none; }
+  .blog-grid::after { content: ''; flex: 0 0 calc(var(--pad) - 16px); }
+
+  .post {
+    flex: 0 0 70vw;
+    max-width: 260px;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+  }
+  .post.big {
+    flex: 0 0 82vw;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+  }
+  .post-media,
+  .post.big .post-media { aspect-ratio: 4 / 5; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   4. ESPAÇAMENTO DAS SEÇÕES — respiro, não "caixinhas"
+══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .statements, .works, .process, .testimonial,
+  .stats, .studio-values, .emp-body, .emp-amen,
+  .emp-plant, .emp-loc, .processo-detail,
+  .vagas, .reports, .faq {
+    padding-top: clamp(48px, 10vw, 64px);
+    padding-bottom: clamp(48px, 10vw, 64px);
+  }
+  .cta-section { padding-top: clamp(48px, 10vw, 72px); }
+
+  /* Page head e studio-intro: menos padding topo (nav fixo) */
+  .page-head {
+    padding-top: 88px;
+    padding-bottom: 24px;
+    grid-template-columns: 1fr;
+  }
+  .page-head .meta { align-items: flex-start; }
+  .studio-intro { padding-top: 88px; padding-bottom: 24px; }
+
+  /* Works head: esconde meta numérica */
+  .works-head .meta { display: none; }
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .footer-grid .brand-block .word { font-size: clamp(32px, 8vw, 44px); }
+  .footer-bottom { flex-direction: column; gap: 8px; }
+}
+
+/* ── Empreendimento detalhe ───────────────────────────────── */
+@media (max-width: 768px) {
+  .emp-hero-content { padding-top: 80px; padding-bottom: 32px; }
+  /* Specs: 2 colunas */
+  .emp-specs { grid-template-columns: 1fr 1fr; }
+  .emp-specs .spec { border-right: 0; border-bottom: 1px solid var(--line); }
+  .emp-specs .spec:nth-child(2n) { border-left: 1px solid var(--line); }
+}
+@media (max-width: 480px) {
+  /* Galeria: coluna única */
+  .emp-gallery { grid-template-columns: 1fr; aspect-ratio: auto; }
+  .emp-g-cell.big { grid-column: 1; aspect-ratio: 16 / 10; }
+}
+
+/* ── Amenidades ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .emp-amen-grid { grid-template-columns: 1fr 1fr; }
+  .amen:nth-child(3n) { border-right: 1px solid var(--line); }
+  .amen:nth-child(2n) { border-right: 0; }
+}
+@media (max-width: 480px) {
+  .emp-amen-grid { grid-template-columns: 1fr; }
+  .amen { border-right: 0 !important; }
+}
+
+/* ── Processo ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .processo-step { grid-template-columns: 48px 1fr; gap: 16px; }
+  .processo-step .stage-desc { grid-column: 1 / -1; padding-left: 0 !important; }
+}
+
+/* ── Simulador ────────────────────────────────────────────── */
+@media (max-width: 540px) {
+  .sim-toggle { flex-direction: column; border-radius: 12px; align-items: stretch; }
+  .sim-toggle button {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 12px 18px;
+    text-align: left;
+  }
+  .sim-toggle button:last-child { border-bottom: 0; }
+  .sim-output { padding: 20px; }
+  .sim-fin-val { font-size: clamp(28px, 8vw, 40px); }
+  .sim-pa .v { font-size: 20px; }
+}
+
+/* ── Atendimento ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .channels { grid-template-columns: 1fr; }
+  .channel { border-right: 0 !important; }
+}
+
+/* ── FAQ ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .faq-list details summary { grid-template-columns: 32px 1fr 28px; gap: 12px; }
+  .faq-list details p { padding-left: 44px; }
+}
+
+/* ── Vagas ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .vaga { grid-template-columns: 32px 1fr auto; gap: 12px; }
+  .vaga .tag { display: none; }
+}
+
+/* ── Modal de contato ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .modal-form { padding: 24px 20px; }
+  .modal-head { padding: 14px var(--pad); }
+}
+
+/* ── Menu overlay ─────────────────────────────────────────── */
+@media (max-width: 400px) {
+  .menu-overlay .links-big a { font-size: clamp(28px, 8vw, 44px); }
+  .menu-overlay .links-big { gap: 6px; }
+}

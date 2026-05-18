@@ -200,42 +200,7 @@ tick(); setInterval(tick, 30000);
 ============================================================ */
 const ROUTES = ['inicio','empreendimentos','empreendimento','simulador','sobre','processo','esg','carreira','blog','investidores','atendimento'];
 
-/* ============================================================
-   HERO SEARCH → filter empreendimentos page
-============================================================ */
-const heroSearch = document.getElementById('heroSearch');
-if (heroSearch) {
-  heroSearch.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const fd = new FormData(heroSearch);
-    const local = fd.get('local') || '';
-    const tipo  = fd.get('tipo')  || '';
-    const etapa = fd.get('etapa') || '';
-    window._zaydaSearch = { local, tipo, etapa };
-    goTo('empreendimentos');
-  });
-}
-
-function applyEmpSearch() {
-  const { local, tipo, etapa } = (window._zaydaSearch || {});
-  const cards = document.querySelectorAll('#empGrid .obra');
-  let shown = 0;
-  cards.forEach(c => {
-    const okLocal = !local || c.dataset.local === local;
-    const okTipo  = !tipo  || c.dataset.tipo  === tipo;
-    const okEtapa = !etapa || c.dataset.status === etapa;
-    const ok = okLocal && okTipo && okEtapa;
-    c.style.display = ok ? '' : 'none';
-    if (ok) shown++;
-  });
-  const empty = document.getElementById('empEmpty');
-  if (empty) empty.style.display = shown === 0 ? '' : 'none';
-  const cnt = document.getElementById('empCount');
-  if (cnt) cnt.textContent = '(' + String(shown).padStart(2,'0') + ')';
-  return shown;
-}
 document.getElementById('empReset')?.addEventListener('click', () => {
-  window._zaydaSearch = null;
   document.querySelectorAll('#empGrid .obra').forEach(c => c.style.display = '');
   document.querySelectorAll('.filters .chip').forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
   const empty = document.getElementById('empEmpty');
@@ -454,9 +419,7 @@ window.addEventListener('hashchange', () => {
 document.querySelectorAll('[data-link]').forEach(a => {
   a.addEventListener('click', (e) => {
     const route = a.dataset.route;
-    if (route === 'empreendimentos') {
-      setTimeout(applyEmpSearch, 700);
-    } else if (route === 'empreendimento') {
+    if (route === 'empreendimento') {
       const key = a.dataset.emp;
       if (key) { window._zaydaCurrentEmp = key; populateEmp(key); }
     }
@@ -464,12 +427,10 @@ document.querySelectorAll('[data-link]').forEach(a => {
 });
 
 /* ============================================================
-   Filter chips on empreendimentos — extend to clear hero search state
+   Filter chips on empreendimentos — update count
 ============================================================ */
 document.querySelectorAll('.filters .chip').forEach(chip => {
   chip.addEventListener('click', () => {
-    window._zaydaSearch = null;
-    // visibility count
     setTimeout(() => {
       const visible = [...document.querySelectorAll('#empGrid .obra')].filter(c => c.style.display !== 'none').length;
       const cnt = document.getElementById('empCount');
@@ -487,4 +448,3 @@ const _init = (location.hash || '#inicio').slice(1);
 if (_init === 'empreendimento') {
   populateEmp(window._zaydaCurrentEmp || 'praia-da-lagoa');
 }
-if (_init === 'empreendimentos' && window._zaydaSearch) applyEmpSearch();
