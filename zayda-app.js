@@ -197,13 +197,6 @@ function openNavPanel(id) {
   navMenuItems.forEach(i => i.classList.toggle('active', i.dataset.menu === id));
   navPanels.forEach(p => p.classList.toggle('active', p.dataset.panel === id));
   navBackdrop.classList.add('show');
-  /* mostra o slide default do painel que abriu */
-  const activePanel = document.querySelector(`.nav-dropdown[data-panel="${id}"]`);
-  if (activePanel && window._ndcpShow) {
-    const key     = activePanel.dataset.defaultPreview || '';
-    const caption = activePanel.dataset.defaultCaption || '';
-    if (key) window._ndcpShow(key, caption);
-  }
 }
 
 function closeNavPanels(delay = 120) {
