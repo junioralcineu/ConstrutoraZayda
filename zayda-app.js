@@ -604,6 +604,170 @@ if (_init === 'empreendimento') {
 }
 
 /* ============================================================
+   MAPA INTERATIVO — Leaflet.js + CartoDB Positron (sem API key)
+   ─────────────────────────────────────────────────────────────
+   Para ajustar o centro do mapa: edite MAP_CENTER e MAP_ZOOM
+   Para adicionar/remover pontos: edite os arrays IMOVEIS e ROTEIRO
+   Coordenadas: [latitude, longitude]
+============================================================ */
+(function () {
+  if (typeof L === 'undefined') return; // Leaflet não carregou
+
+  const sobrePage = document.querySelector('[data-page="sobre"]');
+  if (!sobrePage) return;
+
+  /* ── Centro do mapa ─────────────────────────────────────── */
+  const MAP_CENTER = [-22.6083, -41.9413]; // Barra de São João, RJ
+  const MAP_ZOOM   = 14;
+
+  /* ── Dados: Imóveis Zayda ───────────────────────────────── */
+  const IMOVEIS = [
+    { id: 'praia-da-lagoa', name: 'Praia da Lagoa', meta: 'Lançamento · 2026', lat: -22.6150, lng: -41.9300 },
+    { id: 'mares',          name: 'Marés',           meta: 'Em obra · 2025',    lat: -22.6060, lng: -41.9480 },
+    { id: 'atoba',          name: 'Atobá',           meta: 'Em obra · 2025',    lat: -22.6125, lng: -41.9355 },
+    { id: 'vila-do-sol',    name: 'Vila do Sol',     meta: 'Entregue · 2024',   lat: -22.6072, lng: -41.9432 },
+  ];
+
+  /* ── Dados: Roteiro da Cidade ───────────────────────────── */
+  const ROTEIRO = [
+    { id: 'lagoa-jacare',  name: 'Lagoa de Jacarepiá',      meta: 'Paisagem natural · Pesca',   lat: -22.6210, lng: -41.9190 },
+    { id: 'praia-meio',    name: 'Praia do Meio',            meta: 'Praia urbana · Surf',         lat: -22.6180, lng: -41.9140 },
+    { id: 'centro',        name: 'Centro Histórico',         meta: 'Comércio · Restaurantes',    lat: -22.6083, lng: -41.9413 },
+    { id: 'rio-sao-joao',  name: 'Rio São João',             meta: 'Caiaque · Natureza',          lat: -22.5950, lng: -41.9360 },
+    { id: 'barra-furado',  name: 'Praia de Barra do Furado', meta: 'Kitesurf · Mar aberto',       lat: -22.6280, lng: -41.9050 },
+  ];
+
+  let zaydaMap    = null;
+  let activeMarkers = [];
+
+  /* Cria o ícone HTML para o marcador */
+  function makeIcon(type) {
+    return L.divIcon({
+      className: '',
+      html: `<div class="map-marker-${type}"></div>`,
+      iconSize:   [14, 14],
+      iconAnchor: [7,  7 ],
+    });
+  }
+
+  /* Renderiza os cards na listagem esquerda */
+  function renderCards(data, group) {
+    const listing   = document.getElementById('mapListing');
+    const isImovel  = group === 'imoveis';
+    const dotClass  = isImovel ? 'imovel' : 'turismo';
+    const headerLbl = isImovel ? 'Imóveis Zayda'        : 'Roteiro da Cidade';
+    const headerTxt = isImovel ? '4 empreendimentos'    : '5 pontos imperdíveis';
+
+    listing.innerHTML = `
+      <div class="map-list-header">
+        <span class="label">(${headerLbl})</span>
+        <h3 class="map-list-title">${headerTxt}</h3>
+      </div>
+      ${data.map(d => `
+        <div class="map-card" data-lat="${d.lat}" data-lng="${d.lng}">
+          <div class="map-card-dot ${dotClass}"></div>
+          <div class="map-card-body">
+            <div class="map-card-name">${d.name}</div>
+            <div class="map-card-meta">${d.meta}</div>
+          </div>
+          <span class="map-card-arr">→</span>
+        </div>
+      `).join('')}
+    `;
+
+    /* Clique no card → voa até o marcador */
+    listing.querySelectorAll('.map-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const lat = parseFloat(card.dataset.lat);
+        const lng = parseFloat(card.dataset.lng);
+        zaydaMap.flyTo([lat, lng], 16, { duration: 1.2, easeLinearity: 0.4 });
+        listing.querySelectorAll('.map-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  }
+
+  /* Remove todos os marcadores ativos do mapa */
+  function clearMarkers() {
+    activeMarkers.forEach(m => zaydaMap.removeLayer(m));
+    activeMarkers = [];
+  }
+
+  /* Adiciona marcadores e tooltip ao mapa */
+  function addMarkers(data, type) {
+    data.forEach(d => {
+      const m = L.marker([d.lat, d.lng], { icon: makeIcon(type) })
+        .addTo(zaydaMap)
+        .bindTooltip(d.name, {
+          permanent:  false,
+          direction:  'top',
+          offset:     [0, -12],
+          className:  'map-tooltip',
+        });
+      activeMarkers.push(m);
+    });
+  }
+
+  /* Alterna entre os dois grupos de conteúdo */
+  function switchGroup(group) {
+    const data = group === 'imoveis' ? IMOVEIS : ROTEIRO;
+    const type = group === 'imoveis' ? 'imoveis' : 'turismo';
+
+    document.getElementById('togImoveis').classList.toggle('active', group === 'imoveis');
+    document.getElementById('togRoteiro').classList.toggle('active', group === 'roteiro');
+
+    clearMarkers();
+    addMarkers(data, type);
+    renderCards(data, group);
+    zaydaMap.flyTo(MAP_CENTER, MAP_ZOOM, { duration: 0.9 });
+  }
+
+  /* Inicializa o mapa (chamado apenas uma vez, lazily) */
+  function initMap() {
+    if (zaydaMap) {
+      zaydaMap.invalidateSize(); // corrige tiles ao exibir novamente
+      return;
+    }
+
+    zaydaMap = L.map('zaydaMap', {
+      center:           MAP_CENTER,
+      zoom:             MAP_ZOOM,
+      zoomControl:      false,   // vamos reposicionar
+      scrollWheelZoom:  false,   // evita capturar scroll da página
+    });
+
+    /* Tiles CartoDB Positron — visual minimalista, sem API key */
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains:  'abcd',
+      maxZoom:     19,
+    }).addTo(zaydaMap);
+
+    /* Controles de zoom reposicionados no canto inferior direito */
+    L.control.zoom({ position: 'bottomright' }).addTo(zaydaMap);
+
+    /* Ativa scroll wheel após clicar no mapa (UX: evita scroll acidental) */
+    zaydaMap.on('click', () => zaydaMap.scrollWheelZoom.enable());
+    zaydaMap.on('mouseout', () => zaydaMap.scrollWheelZoom.disable());
+
+    /* Estado inicial: imóveis */
+    switchGroup('imoveis');
+
+    /* Botões do widget bento box */
+    document.getElementById('togImoveis').addEventListener('click', () => switchGroup('imoveis'));
+    document.getElementById('togRoteiro').addEventListener('click', () => switchGroup('roteiro'));
+  }
+
+  /* Inicialização lazy: só quando a página "sobre" ficar ativa */
+  new MutationObserver(() => {
+    if (sobrePage.classList.contains('active')) setTimeout(initMap, 80);
+  }).observe(sobrePage, { attributes: true, attributeFilter: ['class'] });
+
+  /* Caso a página já esteja ativa ao carregar (URL direta #sobre) */
+  if (sobrePage.classList.contains('active')) setTimeout(initMap, 80);
+})();
+
+/* ============================================================
    GLOSSÁRIO TÁTIL — tooltip de textura que segue o cursor
    Funciona em qualquer página: basta adicionar a classe
    "tactile-word" e o atributo data-material-img="caminho.jpg"

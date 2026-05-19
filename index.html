@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zayda Construtora — Empreendimentos residenciais · Barra de São João, RJ</title>
 <link rel="stylesheet" href="zayda-styles.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="image-slot.js"></script>
 </head>
 <body>
@@ -515,6 +516,37 @@
       <div class="value-card r"><span class="idx">(04)</span><h3>Lugar</h3><p>Fornecedores e mão de obra da região. Construído por quem mora aqui.</p></div>
     </div>
   </section>
+
+  <!-- ── Seção do mapa ── -->
+  <section class="map-intro">
+    <span class="label">(Localização)</span>
+    <h2 class="section">Visite nosso escritório.</h2>
+    <p class="map-intro-addr">Rodovia Amaral Peixoto, 916, Centro · Barra de São João — RJ</p>
+  </section>
+
+  <div class="map-section">
+
+    <!-- Lado esquerdo: listagem de cards (preenchida pelo JS) -->
+    <div class="map-listing" id="mapListing"></div>
+
+    <!-- Lado direito: mapa Leaflet -->
+    <div class="map-container">
+      <!-- div obrigatória para o Leaflet — precisa ter altura via CSS -->
+      <div id="zaydaMap"></div>
+
+      <!-- Widget Bento Box flutuante com glassmorphism -->
+      <div class="map-widget">
+        <span class="map-widget-eyebrow">Explorar Barra de São João</span>
+        <div class="map-widget-toggle">
+          <!-- Botão ativo por padrão: Imóveis -->
+          <button class="map-tog active" id="togImoveis">Imóveis Zayda</button>
+          <button class="map-tog" id="togRoteiro">Roteiro da Cidade</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 <!-- ========== EMPREENDIMENTO (detalhe) ========== -->
@@ -1596,6 +1628,8 @@
     </div>
   </div>
 </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <!-- ── Glossário Tátil — tooltip de textura que segue o cursor ── -->
 <div id="tactile-tip" aria-hidden="true">
