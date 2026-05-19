@@ -372,7 +372,14 @@ const EMP_DATA = {
     tag:'Três quartos com suíte, cozinha integrada e varanda — a duzentos metros da Prainha.',
     local:'Rua São João · Centro · Barra de São João', units:'32 apartamentos',
     tipo:'3 quartos · 1 suíte · cozinha integrada', vagas:'1 vaga por unidade', entrega:'1 ano após contrato', price:'R$ 480 mil',
-    cloudinaryTag: 'rua-sao-joao'   /* tag do álbum no Cloudinary */
+    cloudinaryTag: 'rua-sao-joao',
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202203/5-IMG_6841_db4c60.jpg',
+    galleryImgs: [
+      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202212/58-IMG_6917_g1zx4c.jpg',
+      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202210/49-IMG_6891_annyry.jpg',
+      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202205/30-IMG_6869_kuaxz5.jpg',
+      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202202/24-IMG_6860_mgphry.jpg',
+    ]
   },
   'mares': {
     name: 'Marés', label:'(01 · 2025 · Praia)', status:'Em obra',
@@ -384,7 +391,8 @@ const EMP_DATA = {
     name: 'Vila do Sol', label:'(02 · 2024 · Centro)', status:'Pronto pra morar',
     tag:'Quarenta e oito unidades em três blocos baixos, com pátio central arborizado.',
     local:'Estrada do Sana, 1.200 · Barra de São João', units:'48 apartamentos',
-    tipo:'2 quartos · 54–66 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Mai 2024', price:'R$ 380 mil'
+    tipo:'2 quartos · 54–66 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Mai 2024', price:'R$ 380 mil',
+    cloudinaryTag: 'rua-tucunaré-rosangela'
   },
   'aldeia': {
     name: 'Aldeia', label:'(03 · 2023 · Costa Azul)', status:'Pronto pra morar',
@@ -432,7 +440,28 @@ function populateEmp(key) {
   setText('specVagas', d.vagas);
   setText('specEntrega', d.entrega);
   setText('specPrice', d.price);
+  /* Atualiza hero — URL estática ou marcado para o Cloudinary preencher */
+  const _hEl = document.getElementById('empHeroImg');
+  if (_hEl) {
+    if (d.heroImg) { _hEl.src = d.heroImg; _hEl.classList.remove('img-awaiting-cloud'); }
+    else            { _hEl.removeAttribute('src'); _hEl.classList.add('img-awaiting-cloud'); }
+    _hEl.alt = d.name;
+  }
+  /* Atualiza 4 células da galeria estática */
+  document.querySelectorAll('.emp-g-cell img').forEach((img, i) => {
+    const src = d.galleryImgs && d.galleryImgs[i];
+    if (src) { img.src = src; img.classList.remove('img-awaiting-cloud'); }
+    else       { img.removeAttribute('src'); img.classList.add('img-awaiting-cloud'); }
+    img.alt = `${d.name} — foto ${i + 1}`;
+  });
   loadCloudinaryGallery(d.cloudinaryTag || null);
+  /* Reinicia vídeo ambiente quando o projeto é carregado */
+  setTimeout(() => {
+    document.querySelectorAll('.emp-map video').forEach(v => {
+      v.currentTime = 0;
+      v.play().catch(() => {});
+    });
+  }, 200);
 }
 
 /* ============================================================
@@ -475,10 +504,28 @@ function loadCloudinaryGallery(tag) {
         grid.innerHTML = '';
         return;
       }
-      /* Monta cada item com URL otimizada: f_auto,q_auto */
-      grid.innerHTML = data.resources.map(img => {
-        const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${img.public_id}`;
-        const alt = img.public_id.split('/').pop().replace(/[-_]/g, ' ');
+      const buildUrl = r => `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${r.public_id}`;
+
+      /* Preenche hero se ainda aguarda Cloudinary */
+      const _hEl = document.getElementById('empHeroImg');
+      if (_hEl && _hEl.classList.contains('img-awaiting-cloud') && data.resources[0]) {
+        _hEl.src = buildUrl(data.resources[0]);
+        _hEl.classList.remove('img-awaiting-cloud');
+      }
+
+      /* Preenche células da galeria estática que aguardam Cloudinary (a partir da 2ª imagem) */
+      let _ci = 1;
+      document.querySelectorAll('.emp-g-cell img').forEach(img => {
+        if (img.classList.contains('img-awaiting-cloud') && data.resources[_ci]) {
+          img.src = buildUrl(data.resources[_ci++]);
+          img.classList.remove('img-awaiting-cloud');
+        }
+      });
+
+      /* Galeria Cloudinary na base da página — todas as imagens */
+      grid.innerHTML = data.resources.map(r => {
+        const url = buildUrl(r);
+        const alt = r.public_id.split('/').pop().replace(/[-_]/g, ' ');
         return `
           <div class="emp-cloud-item r">
             <img src="${url}" alt="${alt}" loading="lazy">
@@ -939,6 +986,74 @@ if (_init === 'empreendimento') {
   closeBtn.addEventListener('click', closeDrawer);
   overlay.addEventListener('click', closeDrawer);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+})();
+
+/* ============================================================
+   LIGHTBOX — galeria Cloudinary
+   Clique em qualquer .emp-cloud-item img para abrir.
+   Navegar: ‹ › ou teclas ← →  |  Fechar: × ou Esc ou clique fora
+============================================================ */
+(function () {
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lbImg');
+  const lbClose = document.getElementById('lbClose');
+  const lbPrev  = document.getElementById('lbPrev');
+  const lbNext  = document.getElementById('lbNext');
+  const lbCount = document.getElementById('lbCounter');
+  if (!lb) return;
+
+  let imgs = [], cur = 0;
+
+  function show(index) {
+    cur = (index + imgs.length) % imgs.length;
+    lbImg.style.opacity = '0';
+    setTimeout(() => {
+      lbImg.src = imgs[cur];
+      lbImg.style.opacity = '1';
+    }, 160);
+    lbCount.textContent = `${cur + 1} / ${imgs.length}`;
+  }
+
+  function open(srcs, index) {
+    imgs = srcs; show(index);
+    lb.classList.add('active');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.remove('active');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  /* Galeria Cloudinary dinâmica */
+  document.addEventListener('click', e => {
+    const img = e.target.closest('.emp-cloud-item img');
+    if (!img) return;
+    const all = Array.from(document.querySelectorAll('.emp-cloud-item img'));
+    open(all.map(i => i.src), all.indexOf(img));
+  });
+
+  /* Galeria estática (4 células do empreendimento) */
+  document.addEventListener('click', e => {
+    const img = e.target.closest('.emp-g-cell img');
+    if (!img) return;
+    const all = Array.from(document.querySelectorAll('.emp-g-cell img'));
+    open(all.map(i => i.src), all.indexOf(img));
+  });
+
+  lbClose.addEventListener('click', close);
+  lbPrev.addEventListener('click', () => show(cur - 1));
+  lbNext.addEventListener('click', () => show(cur + 1));
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
 })();
 
 /* ============================================================

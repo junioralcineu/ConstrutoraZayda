@@ -554,7 +554,7 @@
 
   <section class="emp-hero">
     <div class="emp-hero-media">
-      <img src="https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202203/5-IMG_6841_db4c60.jpg" alt="Praia da Lagoa — Capa" style="width:100%;height:100%;object-fit:cover;display:block;" loading="eager">
+      <img id="empHeroImg" src="https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202203/5-IMG_6841_db4c60.jpg" alt="Praia da Lagoa — Capa" style="width:100%;height:100%;object-fit:cover;display:block;" loading="eager">
     </div>
     <div class="hero-overlay"></div>
     <div class="emp-hero-content">
@@ -1857,6 +1857,17 @@
   <button id="side-drawer-close" aria-label="Fechar referência">×</button>
   <div id="side-drawer-content"></div>
 </aside>
+
+<!-- ── Lightbox da galeria ── -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Fechar">×</button>
+  <button class="lb-prev"  id="lbPrev"  aria-label="Anterior">‹</button>
+  <button class="lb-next"  id="lbNext"  aria-label="Próxima">›</button>
+  <div class="lb-stage">
+    <img id="lbImg" src="" alt="">
+  </div>
+  <p class="lb-counter" id="lbCounter"></p>
+</div>
 
 <script src="zayda-app.js"></script>
 </body>
