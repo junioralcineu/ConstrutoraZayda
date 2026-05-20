@@ -491,6 +491,11 @@ function populateEmp(key) {
   /* Reinicia vídeo ambiente quando o projeto é carregado */
   setTimeout(() => {
     document.querySelectorAll('.emp-map video').forEach(v => {
+      /* Lazy video: carrega src se ainda não foi carregado */
+      if (v.dataset.src && !v.getAttribute('src')) {
+        v.src = v.dataset.src;
+        v.load();
+      }
       v.currentTime = 0;
       v.play().catch(() => {});
     });
@@ -907,6 +912,53 @@ if (_init === 'empreendimento') {
 })();
 
 /* ============================================================
+   LAZY VIDEO LOADER — Intersection Observer
+   Carrega o .mp4 real apenas quando o vídeo estiver a 300px
+   de entrar na viewport. preload="none" + poster garantem
+   que nenhum byte de vídeo seja baixado antes disso.
+============================================================ */
+(function () {
+  function activateVideo(vid) {
+    const src = vid.dataset.src;
+    if (!src || vid.getAttribute('src')) return;
+    vid.src = src;
+    vid.load();
+    vid.play().catch(() => {});
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      activateVideo(entry.target);
+      obs.unobserve(entry.target);
+    });
+  }, {
+    rootMargin: '300px 0px', /* dispara 300px antes do vídeo entrar na tela */
+    threshold:  0
+  });
+
+  /* Vídeos já presentes no DOM ao carregar a página */
+  document.querySelectorAll('video.lazy-video').forEach(v => observer.observe(v));
+
+  /* Vídeos injetados dinamicamente (blog, galeria, etc.) */
+  new MutationObserver(mutations => {
+    mutations.forEach(m => {
+      m.addedNodes.forEach(node => {
+        if (node.nodeType !== 1) return;
+        if (node.tagName === 'VIDEO' && node.classList.contains('lazy-video')) {
+          observer.observe(node);
+        } else if (node.querySelectorAll) {
+          node.querySelectorAll('video.lazy-video').forEach(v => observer.observe(v));
+        }
+      });
+    });
+  }).observe(document.body, { childList: true, subtree: true });
+
+  /* Expõe o observer para makeVid() usar imediatamente após criação */
+  window._lazyVideoObserver = observer;
+})();
+
+/* ============================================================
    GLOSSÁRIO TÁTIL — tooltip de textura que segue o cursor
    Funciona em qualquer página: basta adicionar a classe
    "tactile-word" e o atributo data-material-img="caminho.jpg"
@@ -1105,17 +1157,21 @@ if (_init === 'empreendimento') {
     .then(data => {
       if (!data.resources || !data.resources.length) return;
       const r   = data.resources[0];
-      const url = `https://res.cloudinary.com/dovqcebdt/video/upload/f_auto,q_auto/${r.public_id}.mp4`;
+      const url       = `https://res.cloudinary.com/dovqcebdt/video/upload/f_auto,q_auto/${r.public_id}.mp4`;
+      const posterUrl = `https://res.cloudinary.com/dovqcebdt/video/upload/so_0,f_jpg,q_auto/${r.public_id}.jpg`;
 
-      /* Cria um elemento <video> configurado para cada slot */
-      function makeVid(cover) {
+      /* Cria um elemento <video> lazy — src só carrega ao entrar na viewport */
+      function makeVid() {
         const vid = document.createElement('video');
-        vid.src         = url;
-        vid.autoplay    = true;
-        vid.muted       = true;
-        vid.loop        = true;
-        vid.playsInline = true;
+        vid.className     = 'lazy-video';
+        vid.poster        = posterUrl;      /* placeholder instantâneo */
+        vid.dataset.src   = url;            /* src real carregado pelo IntersectionObserver */
+        vid.preload       = 'none';
+        vid.muted         = true;
+        vid.loop          = true;
+        vid.playsInline   = true;
         vid.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        if (window._lazyVideoObserver) window._lazyVideoObserver.observe(vid);
         return vid;
       }
 
