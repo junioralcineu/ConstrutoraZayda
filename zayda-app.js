@@ -1066,6 +1066,41 @@ if (_init === 'empreendimento') {
 })();
 
 /* ============================================================
+   VIDEO COVER — Artigo "O Concreto Aprendeu a Se Curar Sozinho"
+   Busca o vídeo pela tag blog-video-mit no Cloudinary e injeta
+   um <video> autoplay no card do blog no lugar do image-slot.
+============================================================ */
+(function () {
+  const slotCard   = document.getElementById('slot-blog-concreto');
+  const slotCover  = document.getElementById('slot-artigo-concreto');
+  if (!slotCard && !slotCover) return;
+
+  fetch('https://res.cloudinary.com/dovqcebdt/video/list/blog-video-mit.json')
+    .then(r => r.ok ? r.json() : Promise.reject('Resource List inativa'))
+    .then(data => {
+      if (!data.resources || !data.resources.length) return;
+      const r   = data.resources[0];
+      const url = `https://res.cloudinary.com/dovqcebdt/video/upload/f_auto,q_auto/${r.public_id}.mp4`;
+
+      /* Cria um elemento <video> configurado para cada slot */
+      function makeVid(cover) {
+        const vid = document.createElement('video');
+        vid.src         = url;
+        vid.autoplay    = true;
+        vid.muted       = true;
+        vid.loop        = true;
+        vid.playsInline = true;
+        vid.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        return vid;
+      }
+
+      if (slotCard)  slotCard.replaceWith(makeVid());
+      if (slotCover) slotCover.replaceWith(makeVid());
+    })
+    .catch(err => console.warn('[Blog video]', err));
+})();
+
+/* ============================================================
    POI FILTER — Onde fica (Turísticos / Importantes)
 ============================================================ */
 document.addEventListener('click', e => {
