@@ -1032,10 +1032,10 @@ if (_init === 'empreendimento') {
     if (e.target.closest('a')) return;
     const isOpen = !deck.classList.contains('open');
     if (isOpen) {
-      /* Mede a altura do card da frente para posicionar o card de trás exatamente acima */
-      const frontCard = deck.querySelector('.hw-card:not(.hw-card--back)');
-      const frontH = frontCard ? frontCard.offsetHeight : 88;
-      deck.style.setProperty('--back-top', (frontH + 14) + 'px');
+      /* Mede a altura do card da frente para calcular o offset dos cards atrás */
+      const frontCard = deck.querySelector('.hw-card:nth-child(1)');
+      const h = frontCard ? frontCard.offsetHeight : 88;
+      deck.style.setProperty('--card-h', h + 'px');
     }
     deck.classList.toggle('open', isOpen);
     deck.setAttribute('aria-expanded', String(isOpen));

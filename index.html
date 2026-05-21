@@ -33,7 +33,7 @@
 <div id="heroWidgets" class="hw-stack">
   <div class="hw-deck" id="hwDeck" role="button" aria-expanded="false" aria-label="Abrir destaques">
 
-    <!-- Card 1 — frente do deck (sempre visível) -->
+    <!-- Card 1 — frente do deck (sempre totalmente visível) -->
     <div class="hw-card" id="hwBlog">
       <a class="hw-inner" href="#artigo-metros" data-route="artigo-metros" data-link>
         <div class="hw-thumb">
@@ -47,8 +47,8 @@
       </a>
     </div>
 
-    <!-- Card 2 — atrás do deck, revela ao clicar -->
-    <div class="hw-card hw-card--back" id="hwVagas">
+    <!-- Card 2 — meio, borda superior acima do card 1 -->
+    <div class="hw-card" id="hwVagas">
       <a class="hw-inner" href="#carreira" data-route="carreira" data-link>
         <div class="hw-thumb hw-thumb--dark">
           <span class="hw-pulse"></span>
@@ -57,6 +57,20 @@
           <span class="hw-label">Carreiras · 4 vagas abertas</span>
           <h4 class="hw-title">Engenheiro, arquiteto, mestre e analista.</h4>
           <span class="hw-cta">Ver carreiras →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Card 3 — fundo, borda superior acima do card 2 -->
+    <div class="hw-card" id="hwProject">
+      <a class="hw-inner" href="#empreendimento" data-route="empreendimento" data-link data-emp="praia-da-lagoa">
+        <div class="hw-thumb">
+          <img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_128,h_128,c_fill,f_auto,q_auto/v1779202203/5-IMG_6841_db4c60.jpg" alt="" loading="lazy">
+        </div>
+        <div class="hw-body">
+          <span class="hw-label">Em destaque · Lançamento 2026</span>
+          <h4 class="hw-title">Praia da Lagoa — à beira do Atlântico.</h4>
+          <span class="hw-cta">Ver empreendimento →</span>
         </div>
       </a>
     </div>
