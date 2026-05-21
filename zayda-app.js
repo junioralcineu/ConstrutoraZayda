@@ -294,8 +294,10 @@ const total = steps.length;
 function openContact() { modal.classList.add('open'); stepN = 1; updateStep(); }
 function closeContact() { modal.classList.remove('open'); }
 document.getElementById('openContact').addEventListener('click', openContact);
-document.getElementById('ctaContact').addEventListener('click', openContact);
+document.getElementById('openContactFooter')?.addEventListener('click', openContact);
+document.getElementById('ctaContact')?.addEventListener('click', openContact);
 document.getElementById('closeModal').addEventListener('click', closeContact);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeContact(); });
 
 function updateStep() {
   steps.forEach(s => s.classList.toggle('active', +s.dataset.step === stepN));
@@ -314,6 +316,52 @@ nextBtn.addEventListener('click', () => {
   }
   stepN++; updateStep();
 });
+
+/* Máscara automática do campo WhatsApp — formato (00) 00000-0000 */
+(function () {
+  const phone = document.getElementById('phoneInput');
+  if (!phone) return;
+  phone.addEventListener('input', () => {
+    const d = phone.value.replace(/\D/g, '').slice(0, 11);
+    if (!d) { phone.value = ''; return; }
+    let v = '(' + d.slice(0, 2);
+    if (d.length > 2) v += ') ' + d.slice(2, 7);
+    if (d.length > 7) v += '-' + d.slice(7);
+    phone.value = v;
+  });
+})();
+
+/* Liquid Glass Select — campo "Como você ouviu falar da gente?" */
+(function () {
+  const sel = document.getElementById('origemSelect');
+  if (!sel) return;
+  const trigger  = sel.querySelector('.liq-trigger');
+  const valEl    = sel.querySelector('.liq-value');
+  const hidden   = sel.querySelector('input[type="hidden"]');
+
+  trigger.addEventListener('click', e => {
+    e.stopPropagation();
+    const isOpen = sel.classList.toggle('open');
+    trigger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  sel.querySelectorAll('.liq-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      sel.querySelectorAll('.liq-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      valEl.textContent = opt.dataset.val;
+      hidden.value      = opt.dataset.val;
+      sel.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* Fecha ao clicar fora */
+  document.addEventListener('click', () => {
+    sel.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  });
+})();
 
 // radio-style options
 document.querySelectorAll('.options').forEach(group => {
