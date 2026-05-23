@@ -686,27 +686,6 @@ h3.title {
   margin: 0;
 }
 
-/* ============================================================
-   FONTES CUSTOMIZADAS — Hero Section
-   Coloque os arquivos na pasta /fonts/ para ativar.
-   Enquanto isso, os fallbacks de sistema são usados.
-============================================================ */
-@font-face {
-  font-family: 'Helvetica Neue LT Pro';
-  src: url('fonts/HelveticaNeueLTPro-Md.woff2') format('woff2'),
-       url('fonts/HelveticaNeueLTPro-Md.woff')  format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Dashiell Bright';
-  src: url('fonts/DashiellBright-Regular.woff2') format('woff2'),
-       url('fonts/DashiellBright-Regular.woff')  format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* ============================================================
    HERO — Tipografia editorial · imagem artística em tela cheia

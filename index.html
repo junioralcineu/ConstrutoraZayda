@@ -5,13 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zayda Construtora — Empreendimentos residenciais · Barra de São João, RJ</title>
 <link rel="stylesheet" href="zayda-styles.css" />
-<link rel="stylesheet" href="https://use.typekit.net/uvg7hxo.css">
 
-<!-- Preconnect: reduz latência nas primeiras requisições Cloudinary e tiles -->
+<!-- Preconnect: reduz latência nas primeiras requisições -->
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
 <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
 <link rel="dns-prefetch" href="https://res.cloudinary.com">
 <link rel="dns-prefetch" href="https://basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://unpkg.com">
+
+<!-- Typekit: carregado de forma não-bloqueante (não atrasa o render) -->
+<link rel="preload" href="https://use.typekit.net/uvg7hxo.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://use.typekit.net/uvg7hxo.css"></noscript>
 
 <!-- image-slot.js: defer — não bloqueia o render -->
 <script src="image-slot.js" defer></script>

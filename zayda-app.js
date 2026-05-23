@@ -136,14 +136,15 @@ if (initialRoute !== 'inicio') {
 /* ============================================================
    BLOG — filtro de categoria
 ============================================================ */
-document.querySelectorAll('.jn-cat').forEach(btn => {
+const jnCats  = document.querySelectorAll('.jn-cat');
+const jnPosts = document.querySelectorAll('#jnGrid .jn-post');
+jnCats.forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.jn-cat').forEach(b => b.classList.remove('active'));
+    jnCats.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const cat = btn.dataset.cat;
-    const posts = document.querySelectorAll('#jnGrid .jn-post');
     let shown = 0;
-    posts.forEach(p => {
+    jnPosts.forEach(p => {
       const match = cat === 'all' || p.dataset.cat === cat;
       p.style.display = match ? '' : 'none';
       if (match) shown++;
@@ -153,8 +154,8 @@ document.querySelectorAll('.jn-cat').forEach(btn => {
   });
 });
 document.getElementById('jnReset')?.addEventListener('click', () => {
-  document.querySelectorAll('.jn-cat').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
-  document.querySelectorAll('#jnGrid .jn-post').forEach(p => p.style.display = '');
+  jnCats.forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+  jnPosts.forEach(p => p.style.display = '');
   const empty = document.getElementById('jnEmpty');
   if (empty) empty.style.display = 'none';
 });
@@ -218,7 +219,7 @@ document.getElementById('jnReset')?.addEventListener('click', () => {
   document.addEventListener('mousemove', e => {
     targetX = e.clientX;
     targetY = e.clientY;
-  });
+  }, { passive: true });
 
   /* Hover em cada nd-link → troca slide */
   document.querySelectorAll('.nd-link[data-preview]').forEach(link => {
@@ -460,9 +461,14 @@ document.querySelectorAll('.options').forEach(group => {
    CUSTOM CURSOR
 ============================================================ */
 const cursor = document.getElementById('cursor');
+let _curRaf = null, _curX = 0, _curY = 0;
 window.addEventListener('mousemove', e => {
-  cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
-});
+  _curX = e.clientX; _curY = e.clientY;
+  if (!_curRaf) _curRaf = requestAnimationFrame(() => {
+    cursor.style.transform = `translate(${_curX}px, ${_curY}px) translate(-50%, -50%)`;
+    _curRaf = null;
+  });
+}, { passive: true });
 document.querySelectorAll('a, button, .work-item, .obra, .processo-step, .opt').forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
@@ -489,14 +495,15 @@ observeReveals();
 /* ============================================================
    FILTERS (Obras)
 ============================================================ */
-document.querySelectorAll('.filters .chip').forEach(chip => {
+const filterChips = document.querySelectorAll('.filters .chip');
+const filterObras = document.querySelectorAll('.obra[data-status]');
+filterChips.forEach(chip => {
   chip.addEventListener('click', () => {
-    document.querySelectorAll('.filters .chip').forEach(c => c.classList.remove('active'));
+    filterChips.forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     const f = chip.dataset.filter;
-    document.querySelectorAll('.obra[data-status]').forEach(o => {
-      const match = f === 'all' || o.dataset.status === f;
-      o.style.display = match ? '' : 'none';
+    filterObras.forEach(o => {
+      o.style.display = f === 'all' || o.dataset.status === f ? '' : 'none';
     });
   });
 });
@@ -512,7 +519,16 @@ function tick() {
   const open = hour >= 8 && hour < 18;
   document.getElementById('clockTxt').textContent = `${hh}:${mm} RJ, ${open ? 'estamos atendendo' : 'voltamos às 08h'}`;
 }
-tick(); setInterval(tick, 30000);
+tick();
+let clockInterval = setInterval(tick, 30000);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    clearInterval(clockInterval);
+  } else {
+    tick();
+    clockInterval = setInterval(tick, 30000);
+  }
+});
 
 /* ============================================================
    NAV BLEND COLOR (light pages need invert)
@@ -1122,6 +1138,16 @@ if (_init === 'empreendimento') {
   /* Vídeos já presentes no DOM ao carregar a página */
   document.querySelectorAll('video.lazy-video').forEach(v => observer.observe(v));
 
+  /* Pausa vídeos que saem do viewport — economiza CPU e bateria */
+  const pauseObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const v = entry.target;
+      if (!v.getAttribute('src')) return; /* ainda não carregado */
+      entry.isIntersecting ? v.play().catch(() => {}) : v.pause();
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('video.lazy-video').forEach(v => pauseObserver.observe(v));
+
   /* Vídeos injetados dinamicamente (blog, galeria, etc.) */
   new MutationObserver(mutations => {
     mutations.forEach(m => {
@@ -1129,14 +1155,17 @@ if (_init === 'empreendimento') {
         if (node.nodeType !== 1) return;
         if (node.tagName === 'VIDEO' && node.classList.contains('lazy-video')) {
           observer.observe(node);
+          pauseObserver.observe(node);
         } else if (node.querySelectorAll) {
-          node.querySelectorAll('video.lazy-video').forEach(v => observer.observe(v));
+          node.querySelectorAll('video.lazy-video').forEach(v => {
+            observer.observe(v);
+            pauseObserver.observe(v);
+          });
         }
       });
     });
   }).observe(document.body, { childList: true, subtree: true });
 
-  /* Expõe o observer para makeVid() usar imediatamente após criação */
   window._lazyVideoObserver = observer;
 })();
 
@@ -1218,8 +1247,13 @@ if (_init === 'empreendimento') {
     nav.classList.toggle('nav--scrolled', !isHome || pastHero);
   }
 
-  /* Atualiza no scroll (passive para não bloquear thread de render) */
-  window.addEventListener('scroll', updateNav, { passive: true });
+  /* Atualiza no scroll com rAF para não executar mais de 1x por frame */
+  let _navRaf = false;
+  window.addEventListener('scroll', () => {
+    if (_navRaf) return;
+    _navRaf = true;
+    requestAnimationFrame(() => { updateNav(); _navRaf = false; });
+  }, { passive: true });
 
   /* Atualiza quando a página "inicio" ganha ou perde a classe active */
   const inicioPage = document.querySelector('.page[data-page="inicio"]');
@@ -1254,7 +1288,7 @@ if (_init === 'empreendimento') {
     raf = requestAnimationFrame(tick);
   }
 
-  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; }, { passive: true });
 
   document.querySelectorAll('.work-item[data-work-img]').forEach(item => {
     item.addEventListener('mouseenter', () => {
@@ -1298,7 +1332,7 @@ if (_init === 'empreendimento') {
     raf = requestAnimationFrame(tick);
   }
 
-  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; }, { passive: true });
 
   document.querySelectorAll('.tactile-word[data-material-img]').forEach(word => {
     word.addEventListener('mouseenter', () => {
