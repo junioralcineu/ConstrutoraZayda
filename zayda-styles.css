@@ -569,7 +569,7 @@ h3.title {
   background: var(--bg-2);
   flex-shrink: 0;
 }
-.hw-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hw-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 1/1; }
 .hw-thumb--dark {
   background: var(--ink);
   display: flex;
@@ -692,7 +692,7 @@ h3.title {
 ============================================================ */
 .hero-viewport {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   min-height: 580px;
   background-image:
