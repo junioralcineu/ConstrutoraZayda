@@ -1619,59 +1619,61 @@ if (_init === 'empreendimento') {
 
   function expand() {
     if (expanded) return;
-    expanded = true;
+    expanded = true; /* trava imediato — impede duplo disparo antes do rAF */
 
-    const r = cover.getBoundingClientRect();
-    wrap.style.height = r.height + 'px'; /* preserva espaço no layout */
+    requestAnimationFrame(() => {
+      const r = cover.getBoundingClientRect(); /* leitura diferida — sem reflow forçado */
+      wrap.style.height = r.height + 'px'; /* reserva espaço no fluxo do documento */
 
-    /* Fixa na posição atual — SEM transição ainda */
-    Object.assign(cover.style, {
-      position: 'fixed',
-      top:      r.top    + 'px',
-      left:     r.left   + 'px',
-      width:    r.width  + 'px',
-      height:   r.height + 'px',
-      zIndex:   '500',
-      overflow: 'hidden',
-      borderRadius: '0',
-      transition: 'none'
+      /* Snap para posição atual — SEM transição ainda */
+      Object.assign(cover.style, {
+        position: 'fixed',
+        top:      r.top    + 'px',
+        left:     r.left   + 'px',
+        width:    r.width  + 'px',
+        height:   r.height + 'px',
+        zIndex:   '500',
+        overflow: 'hidden',
+        borderRadius: '0',
+        transition: 'none'
+      });
+
+      requestAnimationFrame(() => {
+        cover.style.transition = T_OPEN;
+        cover.style.top    = '7.5vh';
+        cover.style.left   = '5vw';
+        cover.style.width  = '90vw';
+        cover.style.height = '85vh';
+        backdrop.classList.add('active');
+        cover.classList.add('gvny-expanded');
+      });
     });
-
-    /* Double rAF: substitui o offsetHeight forçado — browser comita a posição inicial antes da transição */
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      cover.style.transition = T_OPEN;
-      cover.style.top    = '7.5vh';
-      cover.style.left   = '5vw';
-      cover.style.width  = '90vw';
-      cover.style.height = '85vh';
-      backdrop.classList.add('active');
-      cover.classList.add('gvny-expanded');
-    }));
   }
 
   function collapse() {
     if (!expanded) return;
+    expanded = false; /* trava imediato — impede re-expand antes do rAF */
 
-    /* Lê layout ANTES de qualquer escrita — evita reflow forçado */
-    const r = wrap.getBoundingClientRect();
-
-    expanded = false; /* imediato — evita duplo disparo */
-
+    /* Escritas que não afetam posição do wrap — seguro antes da leitura */
     img.style.transform = img.style.transformOrigin = '';
     tooltip.classList.remove('visible');
     cover.classList.remove('gvny-expanded');
     backdrop.classList.remove('active');
-    cover.style.transition = T_CLOSE;
-    cover.style.top    = r.top    + 'px';
-    cover.style.left   = r.left   + 'px';
-    cover.style.width  = r.width  + 'px';
-    cover.style.height = r.height + 'px';
 
-    setTimeout(() => {
-      cover.removeAttribute('style');
-      wrap.style.height = '';
-      cover.style.cursor = 'zoom-in';
-    }, 700);
+    requestAnimationFrame(() => {
+      const r = wrap.getBoundingClientRect(); /* leitura diferida — depois de todas as escritas */
+      cover.style.transition = T_CLOSE;
+      cover.style.top    = r.top    + 'px';
+      cover.style.left   = r.left   + 'px';
+      cover.style.width  = r.width  + 'px';
+      cover.style.height = r.height + 'px';
+
+      setTimeout(() => {
+        cover.removeAttribute('style');
+        wrap.style.height = '';
+        cover.style.cursor = 'zoom-in';
+      }, 700);
+    });
   }
 
   /* Click para abrir */
