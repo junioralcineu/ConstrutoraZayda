@@ -1,0 +1,13 @@
+{
+  "name": "zayda-construtora",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "lightningcss": "^1.29.1",
+    "terser": "^5.36.0"
+  }
+}
