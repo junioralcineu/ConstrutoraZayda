@@ -1540,7 +1540,7 @@ if (_init === 'empreendimento') {
 ──────────────────────────────────────────────────────────── */
 (function () {
   const POSTS = [
-    { route:'artigo-materiais',        cat:'Arquitetura',          date:'12 mai 2026', read:'13 min', title:'Pedra. Madeira. Luz. O que cinco mil anos de arquitetura tentam nos dizer.',  img:'Materials/firstpostblog.webp' },
+    { route:'artigo-materiais',        cat:'Arquitetura',          date:'12 mai 2026', read:'13 min', title:'Pedra. Madeira. Luz. O que cinco mil anos de arquitetura tentam nos dizer.',  img:'https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779713431/a921ee246879721.69d36fc149dfc_ptqgn5.webp' },
     { route:'artigo-bem-estar',        cat:'Bem Estar',            date:'19 mai 2026', read:'12 min', title:'Bem-Estar Não É Um Cômodo.',                                                   img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779219813/ec7a05240187127.693942248159b_fat1nk.webp' },
     { route:'artigo-impermeabilizacao',cat:'Tecnologia',           date:'02 jun 2026', read:'13 min', title:'O Que Acontece com Sua Obra Quando Chove.',                                    img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779288159/3e1011226538547.68375be87851c_tknnxq.webp' },
     { route:'artigo-luz',              cat:'Bem Estar',            date:'09 jun 2026', read:'14 min', title:'Sua Casa Sabe Que Horas São?',                                                 img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779288889/6f1ff9236946593.68f6bff40df3d_o11lwi.webp' },
@@ -1651,14 +1651,16 @@ if (_init === 'empreendimento') {
 
   function collapse() {
     if (!expanded) return;
+
+    /* Lê layout ANTES de qualquer escrita — evita reflow forçado */
+    const r = wrap.getBoundingClientRect();
+
     expanded = false; /* imediato — evita duplo disparo */
 
     img.style.transform = img.style.transformOrigin = '';
     tooltip.classList.remove('visible');
     cover.classList.remove('gvny-expanded');
     backdrop.classList.remove('active');
-
-    const r = wrap.getBoundingClientRect();
     cover.style.transition = T_CLOSE;
     cover.style.top    = r.top    + 'px';
     cover.style.left   = r.left   + 'px';
