@@ -16,6 +16,10 @@ console.log('✓ index.html copiado');
 copyFileSync('sw.js', 'dist/sw.js');
 console.log('✓ sw.js copiado');
 
+/* ── Sitemap — copia sem alterar ── */
+copyFileSync('sitemap.xml', 'dist/sitemap.xml');
+console.log('✓ sitemap.xml copiado');
+
 /* ── CSS — minifica com lightningcss ── */
 const cssIn  = readFileSync('zayda-styles.css');
 const { code: cssOut } = transform({

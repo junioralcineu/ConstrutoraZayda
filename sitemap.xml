@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ============================================================
+       ZAYDA CONSTRUTORA · sitemap.xml
+       Domínio: https://zaydaconstrutora.com
+       Gerado em: 2026-05-26
+       Nota: o site usa hash routing (#). Ao migrar para path
+       routing (/pagina), substituir os fragmentos por caminhos.
+  ============================================================ -->
+
+
+  <!-- ── HOME ── -->
+  <url>
+    <loc>https://zaydaconstrutora.com/</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+
+  <!-- ── EMPREENDIMENTOS ─────────────────────────────────────
+       Imagens de capa dos 8 projetos com fotos disponíveis.
+  ──────────────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://zaydaconstrutora.com/#empreendimentos</loc>
+    <lastmod>2026-05-26</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779202203/5-IMG_6841_db4c60.jpg</image:loc>
+      <image:title>Praia da Lagoa — Zayda Construtora · Barra de São João, RJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779214464/1-dji_fly_20250818_103402_69_1755526869376_photo_1_qihmg0.jpg</image:loc>
+      <image:title>Vila do Sol — Zayda Construtora · Barra de São João, RJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779218018/1-dji_fly_20250904_153658_157_1757011027056_photo_fi39ey.jpg</image:loc>
+      <image:title>Rua Lambari — Zayda Construtora · Barra de São João, RJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779291711/IMG_0148_bupo8n.jpg</image:loc>
+      <image:title>Rua Lambari — Célia · Zayda Construtora · Barra de São João, RJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779294999/IMG_1850_1_qmpqlz.jpg</image:loc>
+      <image:title>Rua Lambari — Andréia · Zayda Construtora · Barra de São João, RJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779303180/IMG_4185_ew9ihu.jpg</image:loc>
+      <image:title>Rua Lambari — Carla · Zayda Construtora · Barra de São João, RJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779805184/18-IMG_8471_ujhlw3.jpg</image:loc>
+      <image:title>Costa Verde — Zayda Construtora · Barra de São João, RJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779807105/90-IMG_0392_eaozi3.jpg</image:loc>
+      <image:title>Ipanema do Norte — Zayda Construtora · Barra de São João, RJ</image:title>
+    </image:image>
+  </url>
+
+
+  <!-- ── INSTITUCIONAL ── -->
+  <url>
+    <loc>https://zaydaconstrutora.com/#sobre</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#processo</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#esg</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#simulador</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#atendimento</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#carreira</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#investidores</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+
+  <!-- ── ZAYDA JOURNAL — LISTAGEM ── -->
+  <url>
+    <loc>https://zaydaconstrutora.com/#blog</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+
+  <!-- ── ZAYDA JOURNAL — ARTIGOS ────────────────────────────
+       lastmod = data de publicação de cada artigo.
+  ──────────────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-materiais</loc>
+    <lastmod>2026-05-12</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779713431/a921ee246879721.69d36fc149dfc_ptqgn5.webp</image:loc>
+      <image:title>Pedra. Madeira. Luz. O que cinco mil anos de arquitetura tentam nos dizer.</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-bem-estar</loc>
+    <lastmod>2026-05-19</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779219813/ec7a05240187127.693942248159b_fat1nk.webp</image:loc>
+      <image:title>Bem-Estar Não É Um Cômodo.</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-concreto</loc>
+    <lastmod>2026-05-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-impermeabilizacao</loc>
+    <lastmod>2026-06-02</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779288159/3e1011226538547.68375be87851c_tknnxq.webp</image:loc>
+      <image:title>O Que Acontece com Sua Obra Quando Chove.</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-luz</loc>
+    <lastmod>2026-06-09</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779288889/6f1ff9236946593.68f6bff40df3d_o11lwi.webp</image:loc>
+      <image:title>Sua Casa Sabe Que Horas São?</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-cozinha</loc>
+    <lastmod>2026-06-16</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779293264/dbaf04248279303.69ee25a666e7d_e46wsc.webp</image:loc>
+      <image:title>A Cozinha Virou Outra Coisa.</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-metros</loc>
+    <lastmod>2026-06-23</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779300854/15__Tuca_Rein%C3%A9s_trvbmq.jpg</image:loc>
+      <image:title>Por Que os Imóveis Mais Caros do Mundo São Menores.</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-longevidade</loc>
+    <lastmod>2026-06-30</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779723595/ad7e3b239465687.693957be90550_dsgci1.jpg</image:loc>
+      <image:title>Durar é o Ato Mais Sustentável que Existe.</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-giverny</loc>
+    <lastmod>2026-07-07</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779388716/the_japanese_footbridge_1992.9.1_gaozko.jpg</image:loc>
+      <image:title>O Jardim Que Ele Construiu Antes de Pintar.</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-litoral-norte</loc>
+    <lastmod>2026-04-01</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779812069/pexels-muhammed-ballan-117690444-10322305_zddg4w.jpg</image:loc>
+      <image:title>O Litoral Norte Fluminense e a Nova Rota do Mercado Imobiliário.</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://zaydaconstrutora.com/#artigo-reflorestamento</loc>
+    <lastmod>2026-04-08</lastmod>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779813007/pexels-aimbere-elorza-1176843138-29257464_geu4f1.jpg</image:loc>
+      <image:title>340 Mudas e Contando: O Programa de Reflorestamento da Mata Ciliar.</image:title>
+    </image:image>
+  </url>
+
+</urlset>
