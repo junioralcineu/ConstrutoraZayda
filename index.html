@@ -321,17 +321,16 @@
 
     <div class="blog-preview-grid">
 
-      <!-- Artigo em destaque — O Concreto Aprendeu a Se Curar Sozinho (vídeo) -->
+      <!-- Artigo em destaque — rotação diária via JS -->
       <article class="bp-featured r">
-        <a href="#artigo-concreto" data-route="artigo-concreto" data-link class="bp-featured-img-wrap">
-          <!-- Preenchido pelo JS (mesmo vídeo do card no blog) -->
-          <div id="slot-bp-concreto" style="width:100%;height:100%;background:var(--bg-2);display:block;"></div>
+        <a id="bpFeatLinkTop" href="#artigo-materiais" data-route="artigo-materiais" data-link class="bp-featured-img-wrap">
+          <img id="bpFeatImg" src="https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779713431/a921ee246879721.69d36fc149dfc_ptqgn5.webp" alt="Pedra. Madeira. Luz. O que cinco mil anos de arquitetura tentam nos dizer." style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
         </a>
         <div class="bp-featured-body">
-          <span class="bp-cat">Processo</span>
-          <h3 class="bp-featured-title">O Concreto Aprendeu a Se Curar Sozinho.</h3>
-          <p class="bp-featured-excerpt">Bactérias que selam fissuras, misturas que sequestram carbono durante a cura: os novos concretos de alto desempenho que estão redefinindo o que significa construir para durar.</p>
-          <a href="#artigo-concreto" data-route="artigo-concreto" data-link class="bp-read">Ler artigo →</a>
+          <span id="bpFeatCat" class="bp-cat">Arquitetura</span>
+          <h3 id="bpFeatTitle" class="bp-featured-title">Pedra. Madeira. Luz. O que cinco mil anos de arquitetura tentam nos dizer.</h3>
+          <p id="bpFeatExcerpt" class="bp-featured-excerpt">Cada material carrega milênios de acertos e erros. Uma leitura sobre o que nos ensinaram o tijolo, a pedra e a madeira.</p>
+          <a id="bpFeatLinkBot" href="#artigo-materiais" data-route="artigo-materiais" data-link class="bp-read">Ler artigo →</a>
         </div>
       </article>
 
@@ -593,14 +592,14 @@
       </div>
     </a>
     <a class="obra r" data-status="entregue" data-emp="costa-verde" data-local="Praia" data-tipo="3 quartos" href="#empreendimento" data-route="empreendimento" data-link>
-      <div class="obra-media"><image-slot id="slot-12" placeholder="Costa Verde" style="width:100%;height:100%;display:block;"></image-slot><span class="obra-pill">Entregue</span></div>
+      <div class="obra-media"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_900,f_auto,q_auto/v1779805184/18-IMG_8471_ujhlw3.jpg" alt="Costa Verde" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"><span class="obra-pill">Entregue</span></div>
       <div class="obra-foot">
         <div><div class="name">Costa Verde</div><div class="meta">Av. Atlântica · 22 unidades<br/><span class="price">A consultar</span></div></div>
         <div class="year">2021</div>
       </div>
     </a>
     <a class="obra r" data-status="entregue" data-emp="ipanema-do-norte" data-local="Costa Azul" data-tipo="2 quartos" href="#empreendimento" data-route="empreendimento" data-link>
-      <div class="obra-media"><image-slot id="slot-13" placeholder="Ipanema do Norte" style="width:100%;height:100%;display:block;"></image-slot><span class="obra-pill">Entregue</span></div>
+      <div class="obra-media"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_900,f_auto,q_auto/v1779807105/90-IMG_0392_eaozi3.jpg" alt="Ipanema do Norte" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"><span class="obra-pill">Entregue</span></div>
       <div class="obra-foot">
         <div><div class="name">Ipanema do Norte</div><div class="meta">Rua dos Coqueiros · 14 unidades<br/><span class="price">A consultar</span></div></div>
         <div class="year">2020</div>
@@ -611,6 +610,19 @@
     <p class="statement">Nenhum empreendimento encontrado com esses filtros.</p>
     <button class="btn-ghost" id="empReset">Limpar filtros</button>
   </div>
+
+  <!-- ── Paginação da grade de empreendimentos ── -->
+  <nav class="emp-nav" aria-label="Navegar entre páginas de empreendimentos" style="display:none;">
+    <button class="emp-nav-item emp-nav-prev" id="empNavPrev" aria-label="Página anterior">
+      <svg class="emp-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="emp-nav-label">Anterior</span>
+    </button>
+    <span class="emp-nav-counter" id="empNavCounter" aria-live="polite"></span>
+    <button class="emp-nav-item emp-nav-next" id="empNavNext" aria-label="Próxima página">
+      <span class="emp-nav-label">Próximos</span>
+      <svg class="emp-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </nav>
 </div>
 
 <!-- ========== SOBRE ========== -->

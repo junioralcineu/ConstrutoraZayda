@@ -604,16 +604,20 @@ const EMP_DATA = {
     tipo:'2 quartos · 56–68 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Mar 2022', price:'A consultar'
   },
   'costa-verde': {
-    name: 'Costa Verde', label:'(06 · 2021 · Praia)', status:'Pronto pra morar',
+    name: 'Costa Verde', label:'(06 · 2021 · Praia)', status:'Entregue',
     tag:'Vinte e duas unidades com vista para o mar, em terreno arborizado.',
     local:'Av. Atlântica, 1.800 · Praia', units:'22 apartamentos',
-    tipo:'3 quartos · 72–88 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Jul 2021', price:'A consultar'
+    tipo:'3 quartos · 72–88 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Jul 2021', price:'A consultar',
+    cloudinaryTag: 'rua-wellington-borges',
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779805184/18-IMG_8471_ujhlw3.jpg'
   },
   'ipanema-do-norte': {
-    name: 'Ipanema do Norte', label:'(07 · 2020 · Costa Azul)', status:'Pronto pra morar',
+    name: 'Ipanema do Norte', label:'(07 · 2020 · Costa Azul)', status:'Entregue',
     tag:'Quatorze unidades em rua arborizada, a duas quadras do mar.',
     local:'Rua dos Coqueiros, 50 · Costa Azul', units:'14 apartamentos',
-    tipo:'2 quartos · 60–74 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Set 2020', price:'A consultar'
+    tipo:'2 quartos · 60–74 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Set 2020', price:'A consultar',
+    cloudinaryTag: 'rua-badejo-entregue',
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779807105/90-IMG_0392_eaozi3.jpg'
   },
   'rua-lambari-juliana': {
     name: 'Rua Lambari', label:'(08 · 2025 · Centro)', status:'Pronto pra morar',
@@ -648,6 +652,49 @@ const EMP_DATA = {
     heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779303180/IMG_4185_ew9ihu.jpg'
   }
 };
+
+/* ── Paginação da grade de empreendimentos ── */
+const EMP_PAGE_SIZE = 6;
+let empPage = 0;
+
+function renderEmpPage() {
+  const activeFilter = document.querySelector('.filters .chip.active')?.dataset.filter;
+  const nav = document.querySelector('.emp-nav');
+  if (activeFilter !== 'all') {
+    if (nav) nav.style.display = 'none';
+    return;
+  }
+  const cards = Array.from(document.querySelectorAll('#empGrid .obra'));
+  const totalPages = Math.ceil(cards.length / EMP_PAGE_SIZE);
+  cards.forEach((card, i) => {
+    card.style.display = (i >= empPage * EMP_PAGE_SIZE && i < (empPage + 1) * EMP_PAGE_SIZE) ? '' : 'none';
+  });
+  if (nav) {
+    nav.style.display = totalPages <= 1 ? 'none' : '';
+    const prevBtn = document.getElementById('empNavPrev');
+    const nextBtn = document.getElementById('empNavNext');
+    const counter = document.getElementById('empNavCounter');
+    if (prevBtn) prevBtn.disabled = empPage === 0;
+    if (nextBtn) nextBtn.disabled = empPage >= totalPages - 1;
+    if (counter) counter.textContent = `${empPage + 1} / ${totalPages}`;
+  }
+}
+
+document.getElementById('empNavPrev')?.addEventListener('click', () => {
+  if (empPage > 0) { empPage--; renderEmpPage(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+});
+document.getElementById('empNavNext')?.addEventListener('click', () => {
+  const total = Math.ceil(document.querySelectorAll('#empGrid .obra').length / EMP_PAGE_SIZE);
+  if (empPage < total - 1) { empPage++; renderEmpPage(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+});
+
+/* Reset página ao trocar filtro */
+document.querySelectorAll('.filters .chip').forEach(chip => {
+  chip.addEventListener('click', () => { empPage = 0; setTimeout(renderEmpPage, 70); });
+});
+document.getElementById('empReset')?.addEventListener('click', () => { empPage = 0; setTimeout(renderEmpPage, 70); });
+
+renderEmpPage();
 
 function populateEmp(key) {
   const d = EMP_DATA[key];
@@ -766,6 +813,22 @@ function loadCloudinaryGallery(tag) {
       grid.innerHTML = '';
     });
 }
+
+/* Pré-carrega thumbnails do grid para projetos com cloudinaryTag */
+document.querySelectorAll('.obra[data-emp]').forEach(card => {
+  const imgEl = card.querySelector('[data-cloud-thumb]');
+  if (!imgEl) return;
+  const d = EMP_DATA[card.dataset.emp];
+  if (!d?.cloudinaryTag) return;
+  fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/${d.cloudinaryTag}.json`)
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data?.resources?.[0]) {
+        imgEl.src = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_900,f_auto,q_auto/${data.resources[0].public_id}`;
+      }
+    })
+    .catch(() => {});
+});
 
 // intercept clicks on cards with data-emp BEFORE route handler runs
 document.querySelectorAll('[data-emp]').forEach(el => {
@@ -1324,10 +1387,9 @@ if (_init === 'empreendimento') {
    um <video> autoplay no card do blog no lugar do image-slot.
 ============================================================ */
 (function () {
-  const slotCard     = document.getElementById('slot-blog-concreto');
-  const slotCover    = document.getElementById('slot-artigo-concreto');
-  const slotFeatured = document.getElementById('slot-bp-concreto');
-  if (!slotCard && !slotCover && !slotFeatured) return;
+  const slotCard  = document.getElementById('slot-blog-concreto');
+  const slotCover = document.getElementById('slot-artigo-concreto');
+  if (!slotCard && !slotCover) return;
 
   fetch('https://res.cloudinary.com/dovqcebdt/video/list/blog-video-mit.json')
     .then(r => r.ok ? r.json() : Promise.reject('Resource List inativa'))
@@ -1352,11 +1414,46 @@ if (_init === 'empreendimento') {
         return vid;
       }
 
-      if (slotCard)     slotCard.replaceWith(makeVid());
-      if (slotCover)    slotCover.replaceWith(makeVid());
-      if (slotFeatured) slotFeatured.replaceWith(makeVid());
+      if (slotCard)  slotCard.replaceWith(makeVid());
+      if (slotCover) slotCover.replaceWith(makeVid());
     })
     .catch(err => console.warn('[Blog video]', err));
+})();
+
+/* ── Rotação diária do destaque — Zayda Journal na home ─────
+   Troca 1× por dia. Para adicionar artigo: inclua um objeto
+   no array HOME_POSTS e republique.
+──────────────────────────────────────────────────────────── */
+(function () {
+  const HOME_POSTS = [
+    { route:'artigo-materiais',        cat:'Arquitetura',          title:'Pedra. Madeira. Luz. O que cinco mil anos de arquitetura tentam nos dizer.',  excerpt:'Cada material carrega milênios de acertos e erros. Uma leitura sobre o que nos ensinaram o tijolo, a pedra e a madeira.',                           img:'https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779713431/a921ee246879721.69d36fc149dfc_ptqgn5.webp' },
+    { route:'artigo-bem-estar',        cat:'Bem Estar',            title:'Bem-Estar Não É Um Cômodo.',                                                   excerpt:'Espaços que geram conforto real não surgem de um projeto de interiores. Surgem de decisões tomadas antes de colocar a primeira pedra.',          img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779219813/ec7a05240187127.693942248159b_fat1nk.webp' },
+    { route:'artigo-impermeabilizacao',cat:'Tecnologia',           title:'O Que Acontece com Sua Obra Quando Chove.',                                    excerpt:'60% das patologias em edificações têm origem na água. Não é azar — é decisão de projeto.',                                                       img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779288159/3e1011226538547.68375be87851c_tknnxq.webp' },
+    { route:'artigo-luz',              cat:'Bem Estar',            title:'Sua Casa Sabe Que Horas São?',                                                  excerpt:'A orientação solar de um dormitório afeta seu sono mais do que qualquer colchão.',                                                               img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779288889/6f1ff9236946593.68f6bff40df3d_o11lwi.webp' },
+    { route:'artigo-cozinha',          cat:'Arquitetura',          title:'A Cozinha Virou Outra Coisa.',                                                  excerpt:'De laboratório de eficiência a centro arquitetônico — e o que essa virada exige da obra.',                                                      img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779293264/dbaf04248279303.69ee25a666e7d_e46wsc.webp' },
+    { route:'artigo-metros',           cat:'Mercado',              title:'Por Que os Imóveis Mais Caros do Mundo São Menores.',                           excerpt:'Em Monaco, €1 milhão compra menos de 20m². O que o mercado global já entendeu sobre valor e densidade urbana.',                                  img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779300854/15__Tuca_Rein%C3%A9s_trvbmq.jpg' },
+    { route:'artigo-giverny',          cat:'Jardins e Paisagismo', title:'O Jardim Que Ele Construiu Antes de Pintar.',                                   excerpt:'Monet levou 43 anos construindo Giverny. A obra mais importante que ele criou nunca apareceu em uma moldura.',                                  img:'https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200/v1779388716/the_japanese_footbridge_1992.9.1_gaozko.jpg' },
+  ];
+
+  const post = HOME_POSTS[Math.floor(Date.now() / 86400000) % HOME_POSTS.length];
+  const href = '#' + post.route;
+
+  const linkTop = document.getElementById('bpFeatLinkTop');
+  if (!linkTop) return;
+  linkTop.href = href; linkTop.dataset.route = post.route;
+
+  const linkBot = document.getElementById('bpFeatLinkBot');
+  if (linkBot) { linkBot.href = href; linkBot.dataset.route = post.route; }
+
+  const img = document.getElementById('bpFeatImg');
+  if (img) { img.src = post.img; img.alt = post.title; }
+
+  const cat     = document.getElementById('bpFeatCat');
+  const title   = document.getElementById('bpFeatTitle');
+  const excerpt = document.getElementById('bpFeatExcerpt');
+  if (cat)     cat.textContent     = post.cat;
+  if (title)   title.textContent   = post.title;
+  if (excerpt) excerpt.textContent = post.excerpt;
 })();
 
 /* ── Rotação diária do artigo em destaque no blog ────────────
