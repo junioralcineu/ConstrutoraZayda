@@ -73,6 +73,13 @@
 
   function load() {
     if (loadP) return loadP;
+    // Em produção (GitHub Pages, CDN) o sidecar não existe.
+    // Resolver imediatamente evita o fetch + os 18 re-renders
+    // pós-paint que causavam CLS. Slots mostram placeholder/src.
+    if (!window.omelette) {
+      loadP = Promise.resolve().then(() => { loaded = true; subs.forEach(fn => fn()); });
+      return loadP;
+    }
     loadP = fetch(STATE_FILE)
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {
