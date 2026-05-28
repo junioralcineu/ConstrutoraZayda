@@ -30,9 +30,12 @@
       setTimeout(() => {
         intro.classList.add('exit');
         /* Anima o texto da hero enquanto a intro desliza para fora */
-        setTimeout(() => {
+        Promise.all([
+          document.fonts.ready,
+          new Promise(r => setTimeout(r, 180))
+        ]).then(() => {
           document.querySelector('.hero-viewport')?.classList.add('hero-animate');
-        }, 180);
+        });
         intro.addEventListener('transitionend', () => intro.remove(), { once: true });
       }, HOLD);
     }
