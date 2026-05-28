@@ -27,6 +27,7 @@ footer{display:none}body[data-route="inicio"] footer{display:block}
 /* Crítico pós-intro: hero e nav renderizam corretamente quando a intro exit dispara */
 .nav{position:fixed;top:0;left:0;right:0;z-index:80}
 .hero-viewport{width:100%;height:100vh;min-height:580px;background-image:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.50)),url('https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.jpg');background-size:cover;background-position:center;background-repeat:no-repeat}
+@media(max-width:768px){.hero-viewport{background-image:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.50)),url('https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_800,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.jpg')}}
 </style>
 
 <!-- Stylesheet completo: não-bloqueante (intro screen cobre o FOUC enquanto carrega) -->
@@ -46,8 +47,9 @@ footer{display:none}body[data-route="inicio"] footer{display:block}
 <!-- Imagem LCP: pré-carregada com alta prioridade -->
 <link rel="preload" as="image" href="https://res.cloudinary.com/dovqcebdt/image/upload/w_1800,f_auto,q_auto/v1779202203/5-IMG_6841_db4c60.jpg" fetchpriority="high">
 
-<!-- Hero home: pré-carrega o background-image apenas no desktop (w_1200 é grande demais para mobile) -->
+<!-- Hero home: tamanho condicional por viewport -->
 <link rel="preload" as="image" href="https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.jpg" media="(min-width: 769px)">
+<link rel="preload" as="image" href="https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_800,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.jpg"  media="(max-width: 768px)">
 
 <!-- JS principal: preload garante que o parser não espere pelo script defer -->
 <link rel="preload" href="zayda-app.js" as="script">
