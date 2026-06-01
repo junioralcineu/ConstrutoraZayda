@@ -754,22 +754,21 @@ h3.title {
   color: #fff;
   max-width: 24ch;
 }
-/* Fallback calibrado para dashiell-bright: métricas ajustadas para que o swap
-   Georgia → dashiell-bright não cause deslocamento de layout (CLS = 0).
-   Valores estimados — ajustar size-adjust se houver shift visível ao carregar. */
+/* Fallback calibrado para Cormorant Garamond: Georgia ajustada para ocupar o mesmo
+   espaço que a web font, eliminando CLS no swap. */
 @font-face {
-  font-family: 'dashiell-fallback';
+  font-family: 'cormorant-fallback';
   src: local('Georgia'), local('Noto Serif');
   font-style: italic;
   font-weight: 400;
-  ascent-override: 91%;
-  descent-override: 23%;
+  ascent-override: 88%;
+  descent-override: 22%;
   line-gap-override: 0%;
-  size-adjust: 104%;
+  size-adjust: 94%;
 }
 .hero-tagline-serif {
-  /* Fonte via Adobe Typekit (kit uvg7hxo); fallback calibrado evita CLS no swap */
-  font-family: 'dashiell-bright', 'Dashiell Bright', 'dashiell-fallback', 'Apple New York', ui-serif, Georgia, serif;
+  /* Google Fonts: Cormorant Garamond italic; fallback calibrado evita CLS no swap */
+  font-family: 'Cormorant Garamond', 'cormorant-fallback', 'Apple New York', ui-serif, Georgia, serif;
   font-style: italic;
   font-size: clamp(15px, 1.8vw, 26px);
   font-weight: 400;
