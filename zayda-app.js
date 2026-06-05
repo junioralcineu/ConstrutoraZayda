@@ -9,11 +9,26 @@
   const lineFill = document.getElementById('introLineFill');
   if (!intro) return;
 
-  /* Retorno de página de projeto: pula a intro para não repetir a abertura */
+  /* Retorno de página de projeto: pula a intro e executa saída do veil */
   if (sessionStorage.getItem('zayda-skip-intro')) {
     sessionStorage.removeItem('zayda-skip-intro');
     intro.remove();
     document.querySelector('.hero-viewport')?.classList.add('hero-animate');
+
+    if (sessionStorage.getItem('zayda-enter-home')) {
+      sessionStorage.removeItem('zayda-enter-home');
+      const _v = document.getElementById('veil');
+      if (_v) {
+        _v.style.transition = 'none';
+        _v.style.transform = 'translateY(0)';
+        _v.classList.add('show');
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          _v.style.transition = 'transform 720ms cubic-bezier(0.7, 0, 0.3, 1)';
+          _v.style.transform = 'translateY(-100%)';
+          setTimeout(() => { _v.classList.remove('show'); _v.style.cssText = ''; }, 760);
+        }));
+      }
+    }
     return;
   }
 
@@ -97,6 +112,7 @@ async function goTo(route, push = true) {
     veil.classList.add('show');
     await new Promise(r => setTimeout(r, 480));
     sessionStorage.setItem('zayda-skip-intro', '1');
+    sessionStorage.setItem('zayda-enter-home', '1');
     window.location.href = `index.html#${route}`;
     return;
   }
@@ -186,7 +202,7 @@ if (IS_SPA) {
     const href = a.getAttribute('href');
     if (!href || !href.endsWith('.html') || href === 'index.html' || href.includes('://')) return;
     e.preventDefault();
-    sessionStorage.setItem('zayda-skip-intro', '1');
+    sessionStorage.setItem('zayda-enter-project', '1');
     veil.style.transition = 'transform 620ms cubic-bezier(0.7, 0, 0.3, 1)';
     veil.style.transform = 'translateY(0)';
     veil.classList.add('show');
@@ -1045,8 +1061,21 @@ document.querySelectorAll('.filters .chip').forEach(chip => {
   });
 });
 
-/* Auto-init galeria em páginas de projeto independentes */
+/* Auto-init galeria e animação de entrada em páginas de projeto independentes */
 if (!IS_SPA) {
+  /* Entrada com veil: cobre a página imediatamente, depois sai */
+  if (veil && sessionStorage.getItem('zayda-enter-project')) {
+    sessionStorage.removeItem('zayda-enter-project');
+    veil.style.transition = 'none';
+    veil.style.transform = 'translateY(0)';
+    veil.classList.add('show');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      veil.style.transition = 'transform 720ms cubic-bezier(0.7, 0, 0.3, 1)';
+      veil.style.transform = 'translateY(-100%)';
+      setTimeout(() => { veil.classList.remove('show'); veil.style.cssText = ''; }, 760);
+    }));
+  }
+
   const _tag = document.body.dataset.cloudinaryTag;
   if (_tag) loadCloudinaryGallery(_tag, window._empPinnedImgs || null);
 }
