@@ -9,6 +9,14 @@
   const lineFill = document.getElementById('introLineFill');
   if (!intro) return;
 
+  /* Retorno de página de projeto: pula a intro para não repetir a abertura */
+  if (sessionStorage.getItem('zayda-skip-intro')) {
+    sessionStorage.removeItem('zayda-skip-intro');
+    intro.remove();
+    document.querySelector('.hero-viewport')?.classList.add('hero-animate');
+    return;
+  }
+
   const DURATION = 1800; /* ms totais do contador            */
   const HOLD     = 180;  /* pausa em 100 antes de sair       */
   const start    = performance.now();
@@ -88,6 +96,7 @@ async function goTo(route, push = true) {
     veil.style.transform = 'translateY(0)';
     veil.classList.add('show');
     await new Promise(r => setTimeout(r, 480));
+    sessionStorage.setItem('zayda-skip-intro', '1');
     window.location.href = `index.html#${route}`;
     return;
   }
@@ -167,6 +176,23 @@ window.addEventListener('popstate', e => {
   const route = (location.hash || '#inicio').slice(1);
   goTo(route, false);
 });
+
+/* Veil transition ao navegar para páginas de projeto (cards do grid, mega-menu, etc.)
+   Só no SPA — as próprias páginas standalone já gerenciam o sentido inverso. */
+if (IS_SPA) {
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href]');
+    if (!a || !veil) return;
+    const href = a.getAttribute('href');
+    if (!href || !href.endsWith('.html') || href === 'index.html' || href.includes('://')) return;
+    e.preventDefault();
+    sessionStorage.setItem('zayda-skip-intro', '1');
+    veil.style.transition = 'transform 620ms cubic-bezier(0.7, 0, 0.3, 1)';
+    veil.style.transform = 'translateY(0)';
+    veil.classList.add('show');
+    setTimeout(() => { window.location.href = href; }, 480);
+  });
+}
 
 // load initial route from hash
 const initialRoute = (location.hash || '#inicio').slice(1);
