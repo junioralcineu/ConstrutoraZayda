@@ -597,12 +597,12 @@ const EMP_DATA = {
     local:'Rua São João · Centro · Barra de São João', units:'32 apartamentos',
     tipo:'3 quartos · 1 suíte · cozinha integrada', vagas:'1 vaga por unidade', entrega:'1 ano após contrato', price:'A consultar',
     cloudinaryTag: 'rua-sao-joao',
-    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202203/5-IMG_6841_db4c60.jpg',
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779202203/5-IMG_6841_db4c60.jpg',
     galleryImgs: [
-      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202212/58-IMG_6917_g1zx4c.jpg',
-      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202210/49-IMG_6891_annyry.jpg',
-      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202205/30-IMG_6869_kuaxz5.jpg',
-      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779202202/24-IMG_6860_mgphry.jpg',
+      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779202212/58-IMG_6917_g1zx4c.jpg',
+      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779202210/49-IMG_6891_annyry.jpg',
+      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779202205/30-IMG_6869_kuaxz5.jpg',
+      'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779202202/24-IMG_6860_mgphry.jpg',
     ]
   },
   'mares': {
@@ -617,7 +617,7 @@ const EMP_DATA = {
     local:'Estrada do Sana, 1.200 · Barra de São João', units:'48 apartamentos',
     tipo:'2 quartos · 54–66 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Mai 2024', price:'A consultar',
     cloudinaryTag: 'rua-tucunaré-rosangela',
-    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779214464/1-dji_fly_20250818_103402_69_1755526869376_photo_1_qihmg0.jpg'
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779214464/1-dji_fly_20250818_103402_69_1755526869376_photo_1_qihmg0.jpg'
   },
   'aldeia': {
     name: 'Aldeia', label:'(03 · 2023 · Costa Azul)', status:'Pronto pra morar',
@@ -643,7 +643,7 @@ const EMP_DATA = {
     local:'Av. Atlântica, 1.800 · Praia', units:'22 apartamentos',
     tipo:'3 quartos · 72–88 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Jul 2021', price:'A consultar',
     cloudinaryTag: 'rua-wellington-borges',
-    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779805184/18-IMG_8471_ujhlw3.jpg'
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779805184/18-IMG_8471_ujhlw3.jpg'
   },
   'ipanema-do-norte': {
     name: 'Ipanema do Norte', label:'(07 · 2020 · Costa Azul)', status:'Entregue',
@@ -651,7 +651,7 @@ const EMP_DATA = {
     local:'Rua dos Coqueiros, 50 · Costa Azul', units:'14 apartamentos',
     tipo:'2 quartos · 60–74 m²', vagas:'1 vaga por unidade', entrega:'Entregue em Set 2020', price:'A consultar',
     cloudinaryTag: 'rua-badejo-entregue',
-    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779807105/90-IMG_0392_eaozi3.jpg',
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779807105/90-IMG_0392_eaozi3.jpg',
     body: {
       p1: '03 quartos, incluindo duas suítes. Sala ampla o suficiente para criar ambientes distintos — área de convívio, home office, cantinho de leitura. O projeto respeita o seu jeito de morar.',
       p3: 'A varanda foi pensada para ir além do descanso: área gourmet coberta com churrasqueira e piscina. Na área externa, três vagas de garagem e área de serviço nos fundos completam o projeto.'
@@ -663,7 +663,7 @@ const EMP_DATA = {
     local:'Rua Lambari · Centro · Barra de São João', units:'A definir',
     tipo:'2 quartos', vagas:'1 vaga por unidade', entrega:'A definir', price:'A consultar',
     cloudinaryTag: 'rua-lambari-juliana',
-    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779218018/1-dji_fly_20250904_153658_157_1757011027056_photo_fi39ey.jpg'
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779218018/1-dji_fly_20250904_153658_157_1757011027056_photo_fi39ey.jpg'
   },
   'rua-lambari-celia': {
     name: 'Rua Lambari — Célia', label:'(09 · 2025 · Centro)', status:'Pronto pra morar',
@@ -671,7 +671,7 @@ const EMP_DATA = {
     local:'Rua Lambari · Centro · Barra de São João', units:'A definir',
     tipo:'2 quartos', vagas:'1 vaga por unidade', entrega:'A definir', price:'A consultar',
     cloudinaryTag: 'rua-lambari-célia',
-    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779291711/IMG_0148_bupo8n.jpg'
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779291711/IMG_0148_bupo8n.jpg'
   },
   'rua-lambari-andreia': {
     name: 'Rua Lambari — Andréia', label:'(10 · 2025 · Centro)', status:'Pronto pra morar',
@@ -679,7 +679,7 @@ const EMP_DATA = {
     local:'Rua Lambari · Centro · Barra de São João', units:'A definir',
     tipo:'2 quartos', vagas:'1 vaga por unidade', entrega:'A definir', price:'A consultar',
     cloudinaryTag: 'rua-lambari-andreia',
-    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779294999/IMG_1850_1_qmpqlz.jpg'
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779294999/IMG_1850_1_qmpqlz.jpg'
   },
   'rua-lambari-carla': {
     name: 'Rua Lambari — Carla', label:'(11 · 2025 · Centro)', status:'Pronto pra morar',
@@ -687,7 +687,7 @@ const EMP_DATA = {
     local:'Rua Lambari · Centro · Barra de São João', units:'A definir',
     tipo:'2 quartos', vagas:'1 vaga por unidade', entrega:'A definir', price:'A consultar',
     cloudinaryTag: 'rua-lambari-carla',
-    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779303180/IMG_4185_ew9ihu.jpg'
+    heroImg: 'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779303180/IMG_4185_ew9ihu.jpg'
   }
 };
 
@@ -1486,11 +1486,11 @@ if (_init === 'empreendimento') {
 (function () {
   const HOME_POSTS = [
     { route:'artigo-materiais',        cat:'Arquitetura',          title:'Pedra. Madeira. Luz. O que cinco mil anos de arquitetura tentam nos dizer.',  excerpt:'Cada material carrega milênios de acertos e erros. Uma leitura sobre o que nos ensinaram o tijolo, a pedra e a madeira.',                           img:'https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779713431/a921ee246879721.69d36fc149dfc_ptqgn5.webp' },
-    { route:'artigo-bem-estar',        cat:'Bem Estar',            title:'Bem-Estar Não É Um Cômodo.',                                                   excerpt:'Espaços que geram conforto real não surgem de um projeto de interiores. Surgem de decisões tomadas antes de colocar a primeira pedra.',          img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779219813/ec7a05240187127.693942248159b_fat1nk.webp' },
-    { route:'artigo-impermeabilizacao',cat:'Bem Estar',            title:'O Que Acontece com Sua Obra Quando Chove.',                                    excerpt:'60% das patologias em edificações têm origem na água. Não é azar — é decisão de projeto.',                                                       img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779288159/3e1011226538547.68375be87851c_tknnxq.webp' },
-    { route:'artigo-luz',              cat:'Bem Estar',            title:'Sua Casa Sabe Que Horas São?',                                                  excerpt:'A orientação solar de um dormitório afeta seu sono mais do que qualquer colchão.',                                                               img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779288889/6f1ff9236946593.68f6bff40df3d_o11lwi.webp' },
-    { route:'artigo-cozinha',          cat:'Arquitetura',          title:'A Cozinha Virou Outra Coisa.',                                                  excerpt:'De laboratório de eficiência a centro arquitetônico — e o que essa virada exige da obra.',                                                      img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779293264/dbaf04248279303.69ee25a666e7d_e46wsc.webp' },
-    { route:'artigo-metros',           cat:'Mercado',              title:'Por Que os Imóveis Mais Caros do Mundo São Menores.',                           excerpt:'Em Monaco, €1 milhão compra menos de 20m². O que o mercado global já entendeu sobre valor e densidade urbana.',                                  img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779300854/15__Tuca_Rein%C3%A9s_trvbmq.jpg' },
+    { route:'artigo-bem-estar',        cat:'Bem Estar',            title:'Bem-Estar Não É Um Cômodo.',                                                   excerpt:'Espaços que geram conforto real não surgem de um projeto de interiores. Surgem de decisões tomadas antes de colocar a primeira pedra.',          img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779219813/ec7a05240187127.693942248159b_fat1nk.webp' },
+    { route:'artigo-impermeabilizacao',cat:'Bem Estar',            title:'O Que Acontece com Sua Obra Quando Chove.',                                    excerpt:'60% das patologias em edificações têm origem na água. Não é azar — é decisão de projeto.',                                                       img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779288159/3e1011226538547.68375be87851c_tknnxq.webp' },
+    { route:'artigo-luz',              cat:'Bem Estar',            title:'Sua Casa Sabe Que Horas São?',                                                  excerpt:'A orientação solar de um dormitório afeta seu sono mais do que qualquer colchão.',                                                               img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779288889/6f1ff9236946593.68f6bff40df3d_o11lwi.webp' },
+    { route:'artigo-cozinha',          cat:'Arquitetura',          title:'A Cozinha Virou Outra Coisa.',                                                  excerpt:'De laboratório de eficiência a centro arquitetônico — e o que essa virada exige da obra.',                                                      img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779293264/dbaf04248279303.69ee25a666e7d_e46wsc.webp' },
+    { route:'artigo-metros',           cat:'Mercado',              title:'Por Que os Imóveis Mais Caros do Mundo São Menores.',                           excerpt:'Em Monaco, €1 milhão compra menos de 20m². O que o mercado global já entendeu sobre valor e densidade urbana.',                                  img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779300854/15__Tuca_Rein%C3%A9s_trvbmq.jpg' },
     { route:'artigo-giverny',          cat:'Jardins e Paisagismo', title:'O Jardim Que Ele Construiu Antes de Pintar.',                                   excerpt:'Monet levou 43 anos construindo Giverny. A obra mais importante que ele criou nunca apareceu em uma moldura.',                                  img:'https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200/v1779388716/the_japanese_footbridge_1992.9.1_gaozko.jpg' },
   ];
 
@@ -1521,12 +1521,12 @@ if (_init === 'empreendimento') {
 ──────────────────────────────────────────────────────────── */
 const BLOG_POSTS = [
   { route:'artigo-materiais',        catKey:'arquitetura',          cat:'Arquitetura',          date:'12 mai 2026', read:'13 min', title:'Pedra. Madeira. Luz. O que cinco mil anos de arquitetura tentam nos dizer.',  excerpt:'Do travertino romano ao carvalho japonês — e ao que a neurociência mede quando o cérebro encontra um ambiente construído com materiais naturais. A história comprova o que a tendência apenas redescobrirá.',         img:'https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779713431/a921ee246879721.69d36fc149dfc_ptqgn5.webp' },
-  { route:'artigo-bem-estar',        catKey:'bem-estar',            cat:'Bem Estar',            date:'19 mai 2026', read:'12 min', title:'Bem-Estar Não É Um Cômodo.',                                                   excerpt:'Espaços que geram conforto real não surgem de um projeto de interiores. Surgem de decisões tomadas antes de colocar a primeira pedra — e de uma compreensão do que é habitar, não apenas ocupar.',               img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779219813/ec7a05240187127.693942248159b_fat1nk.webp' },
-  { route:'artigo-impermeabilizacao',catKey:'bem-estar',            cat:'Bem Estar',            date:'02 jun 2026', read:'13 min', title:'O Que Acontece com Sua Obra Quando Chove.',                                    excerpt:'60% das patologias em edificações têm origem na água. Não é azar — é decisão de projeto. E começa antes de qualquer parede.',                                                                                       img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779288159/3e1011226538547.68375be87851c_tknnxq.webp' },
-  { route:'artigo-luz',              catKey:'bem-estar',            cat:'Bem Estar',            date:'09 jun 2026', read:'14 min', title:'Sua Casa Sabe Que Horas São?',                                                 excerpt:'A orientação solar de um dormitório afeta seu sono mais do que qualquer colchão. A hora mais importante do dia começa pela janela.',                                                                                img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779288889/6f1ff9236946593.68f6bff40df3d_o11lwi.webp' },
-  { route:'artigo-cozinha',          catKey:'arquitetura',          cat:'Arquitetura',          date:'16 jun 2026', read:'12 min', title:'A Cozinha Virou Outra Coisa.',                                                  excerpt:'De laboratório de eficiência a centro arquitetônico. O que essa virada exige da obra — e o que revela sobre como queremos viver.',                                                                                  img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779293264/dbaf04248279303.69ee25a666e7d_e46wsc.webp' },
+  { route:'artigo-bem-estar',        catKey:'bem-estar',            cat:'Bem Estar',            date:'19 mai 2026', read:'12 min', title:'Bem-Estar Não É Um Cômodo.',                                                   excerpt:'Espaços que geram conforto real não surgem de um projeto de interiores. Surgem de decisões tomadas antes de colocar a primeira pedra — e de uma compreensão do que é habitar, não apenas ocupar.',               img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779219813/ec7a05240187127.693942248159b_fat1nk.webp' },
+  { route:'artigo-impermeabilizacao',catKey:'bem-estar',            cat:'Bem Estar',            date:'02 jun 2026', read:'13 min', title:'O Que Acontece com Sua Obra Quando Chove.',                                    excerpt:'60% das patologias em edificações têm origem na água. Não é azar — é decisão de projeto. E começa antes de qualquer parede.',                                                                                       img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779288159/3e1011226538547.68375be87851c_tknnxq.webp' },
+  { route:'artigo-luz',              catKey:'bem-estar',            cat:'Bem Estar',            date:'09 jun 2026', read:'14 min', title:'Sua Casa Sabe Que Horas São?',                                                 excerpt:'A orientação solar de um dormitório afeta seu sono mais do que qualquer colchão. A hora mais importante do dia começa pela janela.',                                                                                img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779288889/6f1ff9236946593.68f6bff40df3d_o11lwi.webp' },
+  { route:'artigo-cozinha',          catKey:'arquitetura',          cat:'Arquitetura',          date:'16 jun 2026', read:'12 min', title:'A Cozinha Virou Outra Coisa.',                                                  excerpt:'De laboratório de eficiência a centro arquitetônico. O que essa virada exige da obra — e o que revela sobre como queremos viver.',                                                                                  img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779293264/dbaf04248279303.69ee25a666e7d_e46wsc.webp' },
   { route:'artigo-longevidade',      catKey:'arquitetura',          cat:'Arquitetura',          date:'30 jun 2026', read:'14 min', title:'Durar é o Ato Mais Sustentável que Existe.',                                    excerpt:'As portas de bronze do Pantheon têm 1.900 anos. E esse número muda completamente o que entendemos por construção responsável.',                                                                                    img:'https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200/v1779723595/ad7e3b239465687.693957be90550_dsgci1.jpg' },
-  { route:'artigo-metros',           catKey:'mercado',              cat:'Mercado',              date:'23 jun 2026', read:'13 min', title:'Por Que os Imóveis Mais Caros do Mundo São Menores.',                           excerpt:'Em Monaco, €1 milhão compra menos de 20m². O que o mercado global já entendeu sobre valor — e o que o mercado brasileiro ainda usa como critério.',                                                                img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto/f_auto/v1779300854/15__Tuca_Rein%C3%A9s_trvbmq.jpg' },
+  { route:'artigo-metros',           catKey:'mercado',              cat:'Mercado',              date:'23 jun 2026', read:'13 min', title:'Por Que os Imóveis Mais Caros do Mundo São Menores.',                           excerpt:'Em Monaco, €1 milhão compra menos de 20m². O que o mercado global já entendeu sobre valor — e o que o mercado brasileiro ainda usa como critério.',                                                                img:'https://res.cloudinary.com/dovqcebdt/image/upload/q_auto,f_auto/v1779300854/15__Tuca_Rein%C3%A9s_trvbmq.jpg' },
   { route:'artigo-litoral-norte',    catKey:'mercado',              cat:'Mercado',              date:'01 abr 2026', read:'8 min',  title:'O Litoral Norte Fluminense e a Nova Rota do Mercado Imobiliário.',               excerpt:'O mercado imobiliário do Rio cresceu 27,8% em 2025. Mas é no litoral norte fluminense que o comprador mais atento está olhando — antes que todos os outros olhem também.',                                         img:'https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779812069/pexels-muhammed-ballan-117690444-10322305_zddg4w.jpg' },
   { route:'artigo-giverny',          catKey:'jardins-e-paisagismo', cat:'Jardins e Paisagismo', date:'07 jul 2026', read:'11 min', title:'O Jardim Que Ele Construiu Antes de Pintar.',                                   excerpt:'Monet levou 43 anos construindo Giverny. O jardim não era o cenário das telas. Era a obra-prima que tornou as telas possíveis.',                                                                                   img:'https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200/v1779388716/the_japanese_footbridge_1992.9.1_gaozko.jpg' },
   { route:'artigo-reflorestamento',  catKey:'tecnologia',           cat:'Sustentabilidade',     date:'08 abr 2026', read:'5 min',  title:'340 Mudas e Contando.',                                                         excerpt:'Uma construtora que planta árvores às margens dos rios antes de erguer paredes. O que é mata ciliar, por que ela importa — e por que esse número vai crescer.',                                                   img:'https://res.cloudinary.com/dovqcebdt/image/upload/w_1200,f_auto,q_auto/v1779813007/pexels-aimbere-elorza-1176843138-29257464_geu4f1.jpg' },
