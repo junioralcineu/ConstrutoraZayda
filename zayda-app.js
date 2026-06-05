@@ -81,6 +81,17 @@ function debounce(fn, ms) {
 
 async function goTo(route, push = true) {
   if (!veil) return;
+
+  /* Páginas standalone: anima o veil e navega para index.html#route */
+  if (!IS_SPA) {
+    veil.style.transition = 'transform 620ms cubic-bezier(0.7, 0, 0.3, 1)';
+    veil.style.transform = 'translateY(0)';
+    veil.classList.add('show');
+    await new Promise(r => setTimeout(r, 480));
+    window.location.href = `index.html#${route}`;
+    return;
+  }
+
   const current = document.querySelector('.page.active');
   const next = document.querySelector(`.page[data-page="${route}"]`);
   if (!next || current === next) return;
@@ -291,14 +302,14 @@ function openNavPanel(id) {
   clearTimeout(menuHideTimer);
   navMenuItems.forEach(i => i.classList.toggle('active', i.dataset.menu === id));
   navPanels.forEach(p => p.classList.toggle('active', p.dataset.panel === id));
-  navBackdrop.classList.add('show');
+  navBackdrop?.classList.add('show');
 }
 
 function closeNavPanels(delay = 120) {
   menuHideTimer = setTimeout(() => {
     navMenuItems.forEach(i => i.classList.remove('active'));
     navPanels.forEach(p => p.classList.remove('active'));
-    navBackdrop.classList.remove('show');
+    navBackdrop?.classList.remove('show');
     if (window._ndcpHide) window._ndcpHide();
   }, delay);
 }
@@ -314,7 +325,7 @@ navPanels.forEach(panel => {
 });
 
 /* Fecha ao clicar no backdrop ou num link do dropdown */
-navBackdrop.addEventListener('click', () => closeNavPanels(0));
+navBackdrop?.addEventListener('click', () => closeNavPanels(0));
 navPanels.forEach(panel => {
   panel.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => closeNavPanels(0));
@@ -325,9 +336,9 @@ navPanels.forEach(panel => {
    MOBILE MENU
 ============================================================ */
 const menuOverlay = document.getElementById('menuOverlay');
-document.getElementById('openMenu').addEventListener('click', () => menuOverlay.classList.add('open'));
-function closeMenu() { menuOverlay.classList.remove('open'); }
-document.getElementById('closeMenu').addEventListener('click', closeMenu);
+document.getElementById('openMenu')?.addEventListener('click', () => menuOverlay?.classList.add('open'));
+function closeMenu() { menuOverlay?.classList.remove('open'); }
+document.getElementById('closeMenu')?.addEventListener('click', closeMenu);
 
 /* ============================================================
    CONTACT MODAL
@@ -342,19 +353,20 @@ const formInner = document.getElementById('contactForm');
 let stepN = 1;
 const total = steps.length;
 
-function openContact() { modal.classList.add('open'); stepN = 1; updateStep(); }
-function closeContact() { modal.classList.remove('open'); }
-document.getElementById('openContact').addEventListener('click', openContact);
+function openContact() { if (!modal) return; modal.classList.add('open'); stepN = 1; updateStep(); }
+function closeContact() { modal?.classList.remove('open'); }
+document.getElementById('openContact')?.addEventListener('click', openContact);
 document.getElementById('openContactFooter')?.addEventListener('click', openContact);
 document.getElementById('ctaContact')?.addEventListener('click', openContact);
-document.getElementById('closeModal').addEventListener('click', closeContact);
+document.getElementById('closeModal')?.addEventListener('click', closeContact);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeContact(); });
 
 function updateStep() {
+  if (!stepIdx) return;
   steps.forEach(s => s.classList.toggle('active', +s.dataset.step === stepN));
   stepIdx.textContent = `(0${stepN}/0${total})`;
-  backBtn.disabled = stepN === 1;
-  nextBtn.textContent = stepN === total ? 'Enviar →' : 'Próximo →';
+  if (backBtn) backBtn.disabled = stepN === 1;
+  if (nextBtn) nextBtn.textContent = stepN === total ? 'Enviar →' : 'Próximo →';
 }
 
 /* Validação do Step 1 */
@@ -1148,6 +1160,11 @@ if (!IS_SPA) {
   const THRESHOLD = 0.80; /* % do viewport height para acionar */
 
   function updateNav() {
+    /* Página standalone: transparente sobre o hero, sólida ao rolar */
+    if (!IS_SPA) {
+      nav.classList.toggle('nav--scrolled', window.scrollY > _vh * THRESHOLD);
+      return;
+    }
     const isHome   = document.querySelector('.page[data-page="inicio"]')
                        ?.classList.contains('active') ?? false;
     const pastHero = window.scrollY > _vh * THRESHOLD;

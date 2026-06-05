@@ -40,15 +40,120 @@ html{scrollbar-gutter:stable}
 <header class="nav" id="nav">
   <a class="brand" href="index.html">Zayda</a>
   <nav class="nav-links">
-    <div class="nav-item"><a href="index.html#empreendimentos">Empreendimentos</a></div>
-    <div class="nav-item"><a href="index.html#blog">Blog</a></div>
-    <div class="nav-item"><a href="index.html#sobre">Expertise</a></div>
-    <div class="nav-item"><a href="index.html#carreira">Pessoas</a></div>
+    <div class="nav-item" data-menu="empreendimentos"><a href="index.html#empreendimentos" data-route="empreendimentos" data-link>Empreendimentos</a></div>
+    <div class="nav-item" data-menu="blog"><a href="index.html#blog" data-route="blog" data-link>Blog</a></div>
+    <div class="nav-item" data-menu="sobre"><a href="index.html#sobre" data-route="sobre" data-link>Expertise</a></div>
+    <div class="nav-item" data-menu="atendimento"><a href="index.html#carreira" data-route="carreira" data-link>Pessoas</a></div>
   </nav>
   <div class="nav-cta">
-    <a class="pill" href="https://wa.me/5522998621100?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Rua%20Lambari%20Célia." target="_blank" rel="noopener">Quero meu imóvel →</a>
-  </div>
+    <a class="pill" id="openContact" href="https://wa.me/5522998621100?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Rua%20Lambari%20Célia." target="_blank" rel="noopener">Quero meu imóvel →</a>
+  <button class="menu" id="openMenu" aria-label="Menu"><svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true"><line x1="0" y1="2" x2="22" y2="2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="0" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
 </header>
+<div class="nav-dropdown" data-panel="empreendimentos" data-default-preview="empreendimentos-default" data-default-caption="Portfólio Zayda · 8 empreendimentos">
+  <div class="nd-inner">
+    <div class="nd-col">
+      <span class="nd-label">Em lançamento &amp; obra</span>
+      <a class="nd-link" data-preview="emp-praia" data-caption="Praia da Lagoa · Lançamento 2026" href="praia-da-lagoa.html">Praia da Lagoa<span class="nd-meta">2026 · Beira-Rio · Lançamento</span></a>
+      <span class="nd-label" style="margin-top:16px;">Pronto para morar</span>
+      <a class="nd-link" data-preview="emp-mangue" data-caption="Rua Lambari — Carla · Pronto pra morar" href="rua-lambari-carla.html">Rua Lambari — Carla<span class="nd-meta">2025 · Centro · Pronto pra morar</span></a>
+    </div>
+    <div class="nd-col">
+      <span class="nd-label">Entregues</span>
+      <a class="nd-link" data-preview="emp-vila" data-caption="Vila do Sol · Entregue 2024" href="vila-do-sol.html">Vila do Sol<span class="nd-meta">2024 · Centro · Entregue</span></a>
+      <a class="nd-link" data-preview="emp-mares" data-caption="Rua Lambari — Célia · Entregue" href="rua-lambari-celia.html">Rua Lambari — Célia<span class="nd-meta">2025 · Centro · Entregue</span></a>
+      <a class="nd-link" data-preview="emp-atoba" data-caption="Rua Lambari — Andréia · Entregue" href="rua-lambari-andreia.html">Rua Lambari — Andréia<span class="nd-meta">2025 · Centro · Entregue</span></a>
+      <a class="nd-link" data-preview="emp-aldeia" data-caption="Rua Lambari · Entregue" href="rua-lambari.html">Rua Lambari<span class="nd-meta">2025 · Centro · Entregue</span></a>
+    </div>
+    <div class="nd-col nd-cta-col">
+      <a class="nd-all" href="index.html#empreendimentos">Ver todos →</a>
+    </div>
+  </div>
+</div>
+<div class="nav-dropdown" data-panel="blog" data-default-preview="blog-default" data-default-caption="Zayda Journal · Toda quinta">
+  <div class="nd-inner">
+    <div class="nd-col">
+      <span class="nd-label">Categorias</span>
+      <a class="nd-link" data-preview="blo-arq" data-caption="Arquitetura · Materiais, proporção e forma" href="index.html#blog">Arquitetura<span class="nd-meta">Materiais, proporção e forma</span></a>
+      <a class="nd-link" data-preview="blo-tec" data-caption="Tecnologia · Inovação e durabilidade" href="index.html#blog">Tecnologia<span class="nd-meta">Inovação e durabilidade</span></a>
+      <a class="nd-link" data-preview="blo-merc" data-caption="Mercado · Análises e tendências" href="index.html#blog">Mercado<span class="nd-meta">Análises e tendências</span></a>
+      <a class="nd-link" data-preview="blo-bem" data-caption="Bem Estar · Habitar com intenção" href="index.html#blog">Bem Estar<span class="nd-meta">Habitar com intenção</span></a>
+      <a class="nd-link" data-preview="blo-jar" data-caption="Jardins e Paisagismo · Natureza e projeto" href="index.html#blog">Jardins e Paisagismo<span class="nd-meta">Natureza e projeto</span></a>
+    </div>
+    <div class="nd-col nd-cta-col">
+      <a class="nd-all" href="index.html#blog">Ver todos os artigos →</a>
+    </div>
+  </div>
+</div>
+<div class="nav-dropdown" data-panel="sobre" data-default-preview="sobre-default" data-default-caption="Zayda · Est. 2014">
+  <div class="nd-inner">
+    <div class="nd-col">
+      <span class="nd-label">A Zayda</span>
+      <a class="nd-link" href="index.html#sobre">Quem somos<span class="nd-meta">Est. 2014 · Barra de São João</span></a>
+    </div>
+    <div class="nd-col">
+      <span class="nd-label">Empresa</span>
+      <a class="nd-link" href="index.html#esg">Sustentabilidade<span class="nd-meta">ESG · Relatório 2025</span></a>
+    </div>
+  </div>
+</div>
+<div class="nav-dropdown" data-panel="atendimento" data-default-preview="atendimento-default" data-default-caption="Atendimento · seg–sex, 8h–18h">
+  <div class="nd-inner">
+    <div class="nd-col">
+      <span class="nd-label">Fale conosco</span>
+      <a class="nd-link" href="https://wa.me/5522998621100" target="_blank">WhatsApp<span class="nd-meta">(22) 99862-1100 · resposta em até 1h</span></a>
+      <a class="nd-link" href="mailto:zaydaconstrutora@gmail.com">E-mail<span class="nd-meta">zaydaconstrutora@gmail.com</span></a>
+    </div>
+    <div class="nd-col">
+      <span class="nd-label">Presencial &amp; suporte</span>
+      <a class="nd-link" href="index.html#atendimento">Visitar o escritório<span class="nd-meta">Rodovia Amaral Peixoto, 916 · Centro</span></a>
+      <a class="nd-link" href="index.html#atendimento">Perguntas frequentes<span class="nd-meta">6 respostas rápidas</span></a>
+      <a class="nd-link" href="index.html#carreira">Trabalhe conosco<span class="nd-meta">4 vagas abertas</span></a>
+    </div>
+  </div>
+</div>
+<div id="ndCursorPreview" class="ndcp" aria-hidden="true" inert>
+  <div class="ndcp-stage">
+    <figure class="ndcp-slide" data-for="empreendimentos-default"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779202203/5-IMG_6841_db4c60.jpg" alt="Portfólio Zayda" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="emp-praia"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779202203/5-IMG_6841_db4c60.jpg" alt="Praia da Lagoa" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="emp-mares"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779291711/IMG_0148_bupo8n.jpg" alt="Rua Lambari — Célia" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="emp-atoba"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779294999/IMG_1850_1_qmpqlz.jpg" alt="Rua Lambari — Andréia" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="emp-vila"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779214464/1-dji_fly_20250818_103402_69_1755526869376_photo_1_qihmg0.jpg" alt="Vila do Sol" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="emp-aldeia"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779218018/1-dji_fly_20250904_153658_157_1757011027056_photo_fi39ey.jpg" alt="Rua Lambari" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="emp-mangue"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779303180/IMG_4185_ew9ihu.jpg" alt="Rua Lambari — Carla" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="blog-default"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_600,f_auto,q_auto/v1779713431/a921ee246879721.69d36fc149dfc_ptqgn5.webp" alt="Zayda Journal" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="blo-arq"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_600,f_auto,q_auto/v1779713431/a921ee246879721.69d36fc149dfc_ptqgn5.webp" alt="Arquitetura" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="blo-tec"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_600,f_auto,q_auto/v1779813007/pexels-aimbere-elorza-1176843138-29257464_geu4f1.jpg" alt="Tecnologia" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="blo-merc"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_600,f_auto,q_auto/v1779812069/pexels-muhammed-ballan-117690444-10322305_zddg4w.jpg" alt="Mercado" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="blo-bem"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_600,f_auto,q_auto/v1779288889/6f1ff9236946593.68f6bff40df3d_o11lwi.webp" alt="Bem Estar" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="blo-jar"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_600,f_auto,q_auto/v1779388716/the_japanese_footbridge_1992.9.1_gaozko.jpg" alt="Jardins e Paisagismo" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="sobre-default"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779202203/5-IMG_6841_db4c60.jpg" alt="Zayda Construtora" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+    <figure class="ndcp-slide" data-for="atendimento-default"><img src="https://res.cloudinary.com/dovqcebdt/image/upload/w_400,f_auto,q_auto/v1779202203/5-IMG_6841_db4c60.jpg" alt="Atendimento Zayda" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></figure>
+  </div>
+  <p class="ndcp-cap"></p>
+</div>
+<div class="nav-backdrop" id="navBackdrop"></div>
+<div class="menu-overlay" id="menuOverlay">
+  <div class="close-row">
+    <button class="pill" id="closeMenu" style="color:var(--bg);border-color:var(--bg);padding:9px 16px;border-radius:999px;border:1px solid currentColor;">Fechar</button>
+  </div>
+  <nav class="links-big">
+    <a href="index.html">Início</a>
+    <a href="index.html#empreendimentos">Empreendimentos</a>
+    <a href="index.html#blog">Blog</a>
+    <a href="index.html#sobre">Expertise</a>
+    <a href="index.html#esg">Sustentabilidade</a>
+    <a href="index.html#carreira">Carreira</a>
+    <a href="index.html#simulador">Simulador</a>
+    <a href="index.html#carreira">Pessoas</a>
+  </nav>
+  <div class="footer-row">
+    <span>Barra de São João · RJ</span>
+    <span>© 2026</span>
+  </div>
+</div>
+<div class="transition-veil" id="veil">
+  <span class="veil-mark serif">Z</span>
+</div>
 
 <section class="emp-hero">
   <div class="emp-hero-media">
