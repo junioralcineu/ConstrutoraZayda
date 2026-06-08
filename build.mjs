@@ -5,6 +5,7 @@
 import { transform } from 'lightningcss';
 import { minify }    from 'terser';
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from 'fs';
+import { PurgeCSS }  from 'purgecss';
 
 mkdirSync('dist', { recursive: true });
 
@@ -42,16 +43,37 @@ console.log('✓ sw.js copiado');
 copyFileSync('sitemap.xml', 'dist/sitemap.xml');
 console.log('✓ sitemap.xml copiado');
 
-/* ── CSS — minifica com lightningcss ── */
-const cssIn  = readFileSync('zayda-styles.css');
+/* ── CSS — remove seletores não usados, depois minifica ── */
+const cssIn  = readFileSync('zayda-styles.css', 'utf8');
+const [purgeResult] = await new PurgeCSS().purge({
+  content: [
+    ...HTML_FILES.map(f => ({ raw: readFileSync(f, 'utf8'), extension: 'html' })),
+    { raw: readFileSync('zayda-app.js', 'utf8'), extension: 'js' },
+  ],
+  css: [{ raw: cssIn }],
+  /* Preserva classes de estado adicionadas via JS que o extractor poderia perder */
+  safelist: {
+    standard: [
+      'active', 'open', 'show', 'visible', 'in', 'exit', 'hover',
+      'selected', 'invalid', 'no-reveal', 'hero-animate', 'nav--scrolled',
+      'gvny-expanded', 'img-awaiting-cloud', 'lazy-video', 'poi-tog',
+    ],
+    /* Preserva todos os seletores do Leaflet (carregado dinâmicamente) */
+    greedy: [/^leaflet-/],
+  },
+  /* Preserva seletores com pseudo-classes e atributos dinâmicos */
+  variables: true,
+});
+const cssPurged = Buffer.from(purgeResult.css);
 const { code: cssOut } = transform({
   filename: 'zayda-styles.css',
-  code: cssIn,
+  code: cssPurged,
   minify: true,
   targets: { chrome: 95, firefox: 95, safari: 15 },
 });
 writeFileSync('dist/zayda-styles.css', cssOut);
-console.log(`✓ zayda-styles.css  ${kb(cssIn.length)} → ${kb(cssOut.length)}`);
+const saved = cssIn.length - cssOut.length;
+console.log(`✓ zayda-styles.css  ${kb(cssIn.length)} → ${kb(cssOut.length)}  (−${kb(saved)} removido)`);
 
 /* ── JS — minifica com terser (image-slot.js excluído: dev-only) ── */
 for (const file of ['zayda-app.js']) {

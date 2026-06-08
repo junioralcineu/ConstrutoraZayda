@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "lightningcss": "^1.29.1",
+    "purgecss": "^8.0.0",
     "terser": "^5.36.0"
   }
 }
