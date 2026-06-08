@@ -43,7 +43,7 @@ footer{display:none}body[data-route="inicio"] footer{display:block}
 .intro-counter{position:absolute;bottom:clamp(24px,4vw,48px);left:clamp(24px,4vw,48px);font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;color:var(--mid);margin:0}
 /* Crítico pós-intro: hero e nav renderizam corretamente quando a intro exit dispara */
 .nav{position:fixed;top:0;left:0;right:0;z-index:80}
-.hero-viewport{position:relative;width:100%;height:100vh;min-height:580px;display:flex;align-items:center;justify-content:center;overflow:hidden;background-image:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.50)),image-set(url('https://res.cloudinary.com/dovqcebdt/image/upload/f_avif,q_auto,w_1200,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.avif') type('image/avif'),url('https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.jpg'));background-size:cover;background-position:center;background-repeat:no-repeat}
+.hero-viewport{position:relative;width:100%;height:100vh;height:100svh;min-height:580px;display:flex;align-items:center;justify-content:center;overflow:hidden;background-image:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.50)),image-set(url('https://res.cloudinary.com/dovqcebdt/image/upload/f_avif,q_auto,w_1200,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.avif') type('image/avif'),url('https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.jpg'));background-size:cover;background-position:center;background-repeat:no-repeat}
 @supports not (background-image: image-set(url('a.avif') type('image/avif'))){
 .hero-viewport{background-image:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.50)),url('https://res.cloudinary.com/dovqcebdt/image/upload/f_auto,q_auto,w_1200,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.jpg')}
 }
@@ -70,8 +70,8 @@ footer{display:none}body[data-route="inicio"] footer{display:block}
 <link rel="dns-prefetch" href="https://res.cloudinary.com">
 
 <!-- Google Fonts — Cormorant Garamond italic: não-bloqueante -->
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&display=swap"></noscript>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&display=optional" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&display=optional"></noscript>
 
 <!-- Imagem LCP (hero da home): pré-carregada com alta prioridade, tamanho condicional por viewport -->
 <link rel="preload" as="image" href="https://res.cloudinary.com/dovqcebdt/image/upload/f_avif,q_auto,w_1200,c_scale/v1779376505/the_bridge_at_argenteuil_1983.1.24_rpbfni.avif" media="(min-width: 769px)" fetchpriority="high">
