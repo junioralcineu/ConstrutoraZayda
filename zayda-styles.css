@@ -1560,6 +1560,9 @@ footer {
 }
 .r.in { opacity: 1; transform: translateY(0); } /* translateY(0) mantém a camada compositor */
 
+/* Visitas repetidas na mesma sessão: mostra tudo pronto, sem animar (evita flash + custo de observers) */
+html.no-reveal .r { opacity: 1; transform: none; transition: none; }
+
 /* ============================================================
    UTILITIES
 ============================================================ */

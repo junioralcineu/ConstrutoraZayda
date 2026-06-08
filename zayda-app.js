@@ -560,6 +560,11 @@ if (cursor) {
 ============================================================ */
 let io;
 function observeReveals() {
+  /* Já vimos a animação nesta sessão: o <html class="no-reveal"> (definido no <head>,
+     antes do primeiro paint) já deixa tudo visível via CSS — não vale a pena gastar
+     ciclos criando observers para elementos que vão aparecer prontos mesmo. */
+  if (document.documentElement.classList.contains('no-reveal')) return;
+
   if (io) io.disconnect();
   io = new IntersectionObserver(entries => {
     entries.forEach(en => {
@@ -570,6 +575,8 @@ function observeReveals() {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll(IS_SPA ? '.page.active .r' : '.r').forEach(el => io.observe(el));
+
+  try { sessionStorage.setItem('zayda-reveals-seen', '1'); } catch (e) {}
 }
 observeReveals();
 
