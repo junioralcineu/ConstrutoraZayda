@@ -64,6 +64,12 @@
   requestAnimationFrame(tick);
 })();
 
+/* Cede à thread principal entre blocos de trabalho pesado (scheduler.yield polyfill) */
+function yieldToMain() {
+  if (globalThis.scheduler?.yield) return scheduler.yield();
+  return new Promise(resolve => setTimeout(resolve, 0));
+}
+
 /* Dimensões do viewport em cache — lidas no resize, usadas em rAF sem causar reflow */
 let _vw = window.innerWidth, _vh = window.innerHeight;
 window.addEventListener('resize', () => { _vw = window.innerWidth; _vh = window.innerHeight; }, { passive: true });
@@ -815,7 +821,7 @@ renderEmpPage();
 ============================================================ */
 const CLOUD_NAME = 'dovqcebdt';
 
-function loadCloudinaryGallery(tag, pinnedUrls) {
+async function loadCloudinaryGallery(tag, pinnedUrls) {
   const section = document.getElementById('empCloudSection');
   const grid    = document.getElementById('empCloudGrid');
   if (!section || !grid) return;
@@ -838,61 +844,67 @@ function loadCloudinaryGallery(tag, pinnedUrls) {
   const ctrl = new AbortController();
   const fetchTimeout = setTimeout(() => ctrl.abort(), 8000);
 
-  fetch(listUrl, { signal: ctrl.signal })
-    .then(r => {
-      clearTimeout(fetchTimeout);
-      if (!r.ok) throw new Error('Verifique se "Resource List" está ativa no Cloudinary.');
-      return r.json();
-    })
-    .then(data => {
-      if (!data.resources || !data.resources.length) {
-        section.style.display = 'none';
-        grid.innerHTML = '';
-        return;
+  try {
+    const r = await fetch(listUrl, { signal: ctrl.signal });
+    clearTimeout(fetchTimeout);
+    if (!r.ok) throw new Error('Verifique se "Resource List" está ativa no Cloudinary.');
+    const data = await r.json();
+
+    if (!data.resources || !data.resources.length) {
+      section.style.display = 'none';
+      grid.innerHTML = '';
+      return;
+    }
+    const buildUrl = r => `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_1200/${r.public_id}`;
+
+    /* Preenche hero se ainda aguarda Cloudinary */
+    const _hEl = document.getElementById('empHeroImg');
+    if (_hEl && _hEl.classList.contains('img-awaiting-cloud') && data.resources[0]) {
+      _hEl.src = buildUrl(data.resources[0]);
+      _hEl.classList.remove('img-awaiting-cloud');
+    }
+
+    /* Preenche células da galeria estática que aguardam Cloudinary (a partir da 2ª imagem) */
+    let _ci = 1;
+    document.querySelectorAll('.emp-g-cell img').forEach(img => {
+      if (img.classList.contains('img-awaiting-cloud') && data.resources[_ci]) {
+        img.src = buildUrl(data.resources[_ci++]);
+        img.classList.remove('img-awaiting-cloud');
       }
-      const buildUrl = r => `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_1200/${r.public_id}`;
-
-      /* Preenche hero se ainda aguarda Cloudinary */
-      const _hEl = document.getElementById('empHeroImg');
-      if (_hEl && _hEl.classList.contains('img-awaiting-cloud') && data.resources[0]) {
-        _hEl.src = buildUrl(data.resources[0]);
-        _hEl.classList.remove('img-awaiting-cloud');
-      }
-
-      /* Preenche células da galeria estática que aguardam Cloudinary (a partir da 2ª imagem) */
-      let _ci = 1;
-      document.querySelectorAll('.emp-g-cell img').forEach(img => {
-        if (img.classList.contains('img-awaiting-cloud') && data.resources[_ci]) {
-          img.src = buildUrl(data.resources[_ci++]);
-          img.classList.remove('img-awaiting-cloud');
-        }
-      });
-
-      /* Galeria Cloudinary na base da página — pinned primeiro, restante depois */
-      const urlKey = url => url.split('/').pop().replace(/\.\w+$/, '');
-      const pinnedKeys = pinnedUrls ? new Set(pinnedUrls.map(urlKey)) : null;
-
-      const pinnedHtml = pinnedUrls ? pinnedUrls.map(url => {
-        const alt = urlKey(url).replace(/[-_]/g, ' ');
-        return `\n          <div class="emp-cloud-item r">\n            <img src="${url}" alt="${alt}" loading="lazy">\n          </div>`;
-      }).join('') : '';
-
-      const remainingHtml = data.resources
-        .filter(r => !pinnedKeys || !pinnedKeys.has(urlKey(buildUrl(r))))
-        .map(r => {
-          const url = buildUrl(r);
-          const alt = r.public_id.split('/').pop().replace(/[-_]/g, ' ');
-          return `\n          <div class="emp-cloud-item r">\n            <img src="${url}" alt="${alt}" loading="lazy">\n          </div>`;
-        }).join('');
-
-      grid.innerHTML = pinnedHtml + remainingHtml;
-      observeReveals();
-    })
-    .catch(err => {
-      clearTimeout(fetchTimeout);
-      console.error('[Cloudinary]', err);
-      grid.innerHTML = '<p class="cloud-gallery-error">Galeria temporariamente indisponível.</p>';
     });
+
+    /* Galeria Cloudinary na base da página — pinned primeiro, restante depois */
+    const urlKey = url => url.split('/').pop().replace(/\.\w+$/, '');
+    const pinnedKeys = pinnedUrls ? new Set(pinnedUrls.map(urlKey)) : null;
+
+    /* Pinned: inseridos imediatamente (geralmente poucos itens) */
+    grid.innerHTML = pinnedUrls ? pinnedUrls.map(url => {
+      const alt = urlKey(url).replace(/[-_]/g, ' ');
+      return `<div class="emp-cloud-item r"><img src="${url}" alt="${alt}" loading="lazy"></div>`;
+    }).join('') : '';
+
+    /* Restante: inserido em lotes de 15 com yield entre cada lote,
+       para que o browser possa responder a interações durante a montagem */
+    const remaining = data.resources
+      .filter(r => !pinnedKeys || !pinnedKeys.has(urlKey(buildUrl(r))));
+
+    const BATCH = 15;
+    for (let i = 0; i < remaining.length; i += BATCH) {
+      grid.insertAdjacentHTML('beforeend', remaining.slice(i, i + BATCH).map(r => {
+        const url = buildUrl(r);
+        const alt = r.public_id.split('/').pop().replace(/[-_]/g, ' ');
+        return `<div class="emp-cloud-item r"><img src="${url}" alt="${alt}" loading="lazy"></div>`;
+      }).join(''));
+
+      if (i + BATCH < remaining.length) await yieldToMain();
+    }
+
+    observeReveals();
+  } catch (err) {
+    clearTimeout(fetchTimeout);
+    console.error('[Cloudinary]', err);
+    grid.innerHTML = '<p class="cloud-gallery-error">Galeria temporariamente indisponível.</p>';
+  }
 }
 
 /* Pré-carrega thumbnails do grid para projetos com cloudinaryTag */
