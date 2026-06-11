@@ -70,6 +70,15 @@ function yieldToMain() {
   return new Promise(resolve => setTimeout(resolve, 0));
 }
 
+/* Escapa strings antes de interpolar em innerHTML/insertAdjacentHTML —
+   protege contra metadados externos (ex.: public_id do Cloudinary) que
+   contenham caracteres de marcação. */
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 /* Dimensões do viewport em cache — lidas no resize, usadas em rAF sem causar reflow */
 let _vw = window.innerWidth, _vh = window.innerHeight;
 window.addEventListener('resize', () => { _vw = window.innerWidth; _vh = window.innerHeight; }, { passive: true });
@@ -101,6 +110,15 @@ const ROUTE_TITLES = {
   blog:            'Blog — Zayda Construtora',
   atendimento:     'Atendimento — Zayda Construtora',
 };
+
+/* Whitelist de rotas válidas — usada para validar location.hash antes de
+   interpolar em seletores CSS (evita seletores inválidos com hash malicioso) */
+const ROUTES = ['inicio','empreendimentos','empreendimento','sobre','esg','carreira','blog','atendimento'];
+
+function getValidRoute(hash) {
+  const route = (hash || '#inicio').replace(/^#/, '');
+  return ROUTES.includes(route) ? route : 'inicio';
+}
 
 function debounce(fn, ms) {
   let t;
@@ -194,12 +212,11 @@ navLinks.forEach(a => {
 });
 
 window.addEventListener('popstate', e => {
-  const route = (location.hash || '#inicio').slice(1);
-  goTo(route, false);
+  goTo(getValidRoute(location.hash), false);
 });
 
 // load initial route from hash
-const initialRoute = (location.hash || '#inicio').slice(1);
+const initialRoute = getValidRoute(location.hash);
 document.body.dataset.route = initialRoute;
 if (initialRoute !== 'inicio') {
   document.querySelector('.page.active')?.classList.remove('active');
@@ -629,11 +646,6 @@ document.addEventListener('visibilitychange', () => {
 ============================================================ */
 // no-op (difference blend handles it)
 
-/* ============================================================
-   ROUTE LIST (extended)
-============================================================ */
-const ROUTES = ['inicio','empreendimentos','empreendimento','sobre','esg','carreira','blog','atendimento'];
-
 document.getElementById('empReset')?.addEventListener('click', () => {
   document.querySelectorAll('#empGrid .obra').forEach(c => c.style.display = '');
   document.querySelectorAll('.filters .chip').forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
@@ -879,8 +891,8 @@ async function loadCloudinaryGallery(tag, pinnedUrls) {
 
     /* Pinned: inseridos imediatamente (geralmente poucos itens) */
     grid.innerHTML = pinnedUrls ? pinnedUrls.map(url => {
-      const alt = urlKey(url).replace(/[-_]/g, ' ');
-      return `<div class="emp-cloud-item r"><img src="${url}" alt="${alt}" loading="lazy"></div>`;
+      const alt = escapeHtml(urlKey(url).replace(/[-_]/g, ' '));
+      return `<div class="emp-cloud-item r"><img src="${escapeHtml(url)}" alt="${alt}" loading="lazy"></div>`;
     }).join('') : '';
 
     /* Restante: inserido em lotes de 15 com yield entre cada lote,
@@ -892,8 +904,8 @@ async function loadCloudinaryGallery(tag, pinnedUrls) {
     for (let i = 0; i < remaining.length; i += BATCH) {
       grid.insertAdjacentHTML('beforeend', remaining.slice(i, i + BATCH).map(r => {
         const url = buildUrl(r);
-        const alt = r.public_id.split('/').pop().replace(/[-_]/g, ' ');
-        return `<div class="emp-cloud-item r"><img src="${url}" alt="${alt}" loading="lazy"></div>`;
+        const alt = escapeHtml(r.public_id.split('/').pop().replace(/[-_]/g, ' '));
+        return `<div class="emp-cloud-item r"><img src="${escapeHtml(url)}" alt="${alt}" loading="lazy"></div>`;
       }).join(''));
 
       if (i + BATCH < remaining.length) await yieldToMain();
@@ -936,7 +948,7 @@ const origGoTo = window.goTo;
 // wrap goTo from external script — we need to extend the listener for the new pages.
 // Since goTo is a top-level function in the original script, it's accessible.
 window.addEventListener('hashchange', () => {
-  const route = (location.hash || '#inicio').slice(1);
+  const route = getValidRoute(location.hash);
   if (route === 'empreendimentos' && window._zaydaSearch) {
     setTimeout(applyEmpSearch, 60);
   }

@@ -1,2 +1,13 @@
 node_modules/
 dist/
+
+# Variáveis de ambiente / segredos
+.env
+.env.*
+!.env.example
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
